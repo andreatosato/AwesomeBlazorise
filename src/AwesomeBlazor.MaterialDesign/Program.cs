@@ -1,3 +1,4 @@
+using AwesomeBlazor.Services;
 using Blazorise;
 using Blazorise.Icons.Material;
 using Blazorise.Material;
@@ -24,6 +25,18 @@ namespace AwesomeBlazor.MaterialDesign
                .AddMaterialIcons();
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddScoped<IThemeService, ThemeService>(sp => new ThemeService
+            {
+                CurrentTheme = new Theme
+                {
+                    BarOptions = new ThemeBarOptions { HorizontalHeight = "64px" },
+                    ColorOptions = new ThemeColorOptions { Primary = "#FF5529" },
+                    BackgroundOptions = new ThemeBackgroundOptions { Primary = "#0288D1" },
+                    InputOptions = new ThemeInputOptions { CheckColor = "#0288D1" },
+                    SidebarOptions = new ThemeSidebarOptions { }
+                }
+            });
 
             builder.RootComponents.Add<App>("#app");
 

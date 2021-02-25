@@ -1,3 +1,4 @@
+using AwesomeBlazor.Services;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
@@ -29,6 +30,17 @@ namespace AwesomeBlazor.Bootstrap
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            builder.Services.AddScoped<IThemeService, ThemeService>(sp => new ThemeService
+            {
+                CurrentTheme = new Theme 
+                {
+                    BarOptions = new ThemeBarOptions { HorizontalHeight = "64px" },                   
+                    ColorOptions = new ThemeColorOptions { Primary = "#A65529" },
+                    BackgroundOptions = new ThemeBackgroundOptions { Primary = "#0288D1"},
+                    InputOptions = new ThemeInputOptions { CheckColor = "#0288D1"},
+                    SidebarOptions = new ThemeSidebarOptions { BackgroundColor = "#A65529" }                    
+                }
+            });
             builder.RootComponents.Add<App>("#app");
 
             var host = builder.Build();

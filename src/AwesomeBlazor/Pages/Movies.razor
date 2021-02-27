@@ -1,0 +1,23 @@
+﻿@page "/movies/view"
+
+<Heading Size="HeadingSize.Is3">Movies</Heading>
+
+<AwPagination Page="PagedMovies.Page" TotalPages="PagedMovies.TotalPages" TotalResults="PagedMovies.TotalResults"></AwPagination>
+
+@code {
+
+    [Inject]
+    public Services.Abstractions.ITMDbService TMDb { get; set; }
+    public PagedResult<Movie> PagedMovies { get; set; } = new PagedResult<Movie>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMoviesAsync(0);
+    }
+
+    private async Task LoadMoviesAsync(int page = 0)
+    {
+        PagedMovies = await TMDb.GetMoviePopularAsync(page);
+        StateHasChanged();
+    }
+}

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeBlazor.MaterialDesign", "AwesomeBlazor.MaterialDesign\AwesomeBlazor.MaterialDesign.csproj", "{F3C1E007-1211-4A29-98DD-328CA9F5A2C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeBlazor.MaterialDesign", "AwesomeBlazor.MaterialDesign\AwesomeBlazor.MaterialDesign.csproj", "{F3C1E007-1211-4A29-98DD-328CA9F5A2C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeBlazor", "AwesomeBlazor\AwesomeBlazor.csproj", "{F6A1ED73-F026-4AC4-A69B-2C90B435125C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeBlazor", "AwesomeBlazor\AwesomeBlazor.csproj", "{F6A1ED73-F026-4AC4-A69B-2C90B435125C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeBlazor.Bootstrap", "AwesomeBlazor.Bootstrap\AwesomeBlazor.Bootstrap.csproj", "{5784C505-109F-4FC6-9D02-4DD6BE463EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeBlazor.Bootstrap", "AwesomeBlazor.Bootstrap\AwesomeBlazor.Bootstrap.csproj", "{5784C505-109F-4FC6-9D02-4DD6BE463EEE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeBlazor.Services", "AwesomeBlazor.Services\AwesomeBlazor.Services.csproj", "{20A98F47-0757-4947-B0A4-A342C77B53D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5784C505-109F-4FC6-9D02-4DD6BE463EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5784C505-109F-4FC6-9D02-4DD6BE463EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5784C505-109F-4FC6-9D02-4DD6BE463EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20A98F47-0757-4947-B0A4-A342C77B53D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20A98F47-0757-4947-B0A4-A342C77B53D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20A98F47-0757-4947-B0A4-A342C77B53D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20A98F47-0757-4947-B0A4-A342C77B53D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

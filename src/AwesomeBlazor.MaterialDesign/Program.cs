@@ -1,4 +1,6 @@
 using AwesomeBlazor.Services;
+using AwesomeBlazor.Services.Abstractions;
+using AwesomeBlazor.Services.Implementations;
 using Blazorise;
 using Blazorise.Icons.Material;
 using Blazorise.Material;
@@ -37,6 +39,8 @@ namespace AwesomeBlazor.MaterialDesign
                     SidebarOptions = new ThemeSidebarOptions { }
                 }
             });
+            builder.Services.AddHttpClient("themoviedb", h => h.BaseAddress = new Uri("https://api.themoviedb.org/3/"));
+            builder.Services.AddScoped<ITMDbService, TMDbService>();
 
             builder.RootComponents.Add<App>("#app");
 

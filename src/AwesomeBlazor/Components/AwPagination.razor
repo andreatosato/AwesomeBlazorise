@@ -1,0 +1,55 @@
+﻿<Pagination>
+    @if (ShowPrevButton)
+    {
+        <PaginationItem @onclick="() => SelectPage(Page - 1)">
+            <PaginationLink>
+                <span aria-hidden="true">«</span>
+            </PaginationLink>
+        </PaginationItem>
+    }
+    @for (int i = 0; i < Pages.Count; i++)
+    {
+        <PaginationItem @onclick="() => SelectPage(Pages[i])">
+            <PaginationLink>
+                @Pages[i]
+            </PaginationLink>
+        </PaginationItem>
+    }
+    @if (ShowNextButton)
+    {
+        <PaginationItem @onclick="() => SelectPage(Page + 1)">
+            <PaginationLink>
+                <span aria-hidden="true">»</span>
+            </PaginationLink>
+        </PaginationItem>
+    }
+</Pagination>
+
+@code {
+
+    public EventCallback<int> OnPage { get; set; }
+
+    [Parameter]
+    public int Page { get; set; }
+
+    [Parameter]
+    public int TotalPages { get; set; }
+
+    [Parameter]
+    public int TotalResults { get; set; }
+
+    public List<int> Pages { get; set; }
+    public bool ShowPrevButton { get; set; }
+    public bool ShowNextButton { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ShowPrevButton = (Page != 1);
+        ShowNextButton = (Page != TotalPages);
+    }
+
+    void SelectPage(int page)
+    {
+        OnPage.InvokeAsync(page);
+    }
+}

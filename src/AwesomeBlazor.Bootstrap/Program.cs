@@ -1,4 +1,6 @@
 using AwesomeBlazor.Services;
+using AwesomeBlazor.Services.Abstractions;
+using AwesomeBlazor.Services.Implementations;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
@@ -41,6 +43,9 @@ namespace AwesomeBlazor.Bootstrap
                     SidebarOptions = new ThemeSidebarOptions { BackgroundColor = "#A65529" }                    
                 }
             });
+            builder.Services.AddHttpClient("themoviedb", h => h.BaseAddress = new Uri("https://api.themoviedb.org/3/"));
+            builder.Services.AddScoped<ITMDbService, TMDbService>();
+
             builder.RootComponents.Add<App>("#app");
 
             var host = builder.Build();

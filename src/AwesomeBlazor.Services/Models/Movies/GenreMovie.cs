@@ -1,4 +1,6 @@
-﻿namespace AwesomeBlazor.Services.Models.Movies
+﻿using System.ComponentModel;
+
+namespace AwesomeBlazor.Services.Models.Movies
 {
     public enum GenreMovie : int
     {
@@ -16,6 +18,7 @@
         Music = 10402,
         Mystery = 9648,
         Romance = 10749,
+        [Description("Science Fiction")]
         ScienceFiction = 878,
         TVMovie = 10770,
         Thriller = 53,

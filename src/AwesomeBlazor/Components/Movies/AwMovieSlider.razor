@@ -1,14 +1,38 @@
-﻿<Carousel @bind-SelectedSlide="@selectedSlide">
-    @foreach (var m in Movies)
-    {
-        <CarouselSlide Name="@m.Id.ToString()">
-            <Image Source="@m.PosterUrl" Text="@m.Title" Display="Display.Block" Style="width: 100%;" />
-        </CarouselSlide>
-    }
-</Carousel>
+﻿<Row>
+    <Column ColumnSize="ColumnSize.IsQuarter.WithOffset.OnDesktop.IsQuarter.OnDesktop.IsQuarter.WithOffset.OnFullHD.IsQuarter.OnFullHD">
+        <Carousel @bind-SelectedSlide="@selectedSlide" Margin="Margin.Is2">
+            @foreach (var m in Movies)
+            {
+                <CarouselSlide Name="@m.Id.ToString()" @onclick="() => MovieClick(m.Id)">
+                    <Image Source="@m.PosterUrl" Text="@m.Title" Display="Display.Block" Style="max-width: 100%" />
+                </CarouselSlide>
+            }
+        </Carousel>
+    </Column>
+</Row>
 
 @code {
     [Parameter]
     public List<Movie> Movies { get; set; }
+
+    [Parameter]
+    public EventCallback<long> OnMovieClick { get; set; }
+
     private string selectedSlide;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if(Movies!= null && Movies.Count > 0)
+        {
+            Movies = Movies.OrderBy(t => t.VoteAverage).Take(5).ToList();
+            selectedSlide = Movies.FirstOrDefault().Id.ToString();
+        }
+    }
+
+    public async Task MovieClick(long id)
+    {
+        if (OnMovieClick.HasDelegate)
+            await OnMovieClick.InvokeAsync(id);
+    }
 }

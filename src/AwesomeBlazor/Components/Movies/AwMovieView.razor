@@ -1,0 +1,35 @@
+﻿<Column ColumnSize="ColumnSize.IsThird.OnDesktop.IsQuarter.OnFullHD.IsFull.OnMobile.IsHalf.OnTablet">
+    <Card Margin="Margin.Is2.FromBottom">
+        <CardImage Source="@Movie.PosterUrl" Alt="@Movie.OriginalTitle" @onclick="() => MovieDetails()"></CardImage>
+        <CardBody>
+            <CardTitle Size="5">@Movie.Title</CardTitle>
+            <Badge Color="Color.Primary">Average: @Movie.VoteAverage</Badge>
+            <Badge Color="Color.Secondary">Votes: @Movie.VoteCount</Badge>
+            @foreach (var g in Movie.GenreIds)
+            {
+                <Badge Color="Color.Light">@g</Badge>
+            }
+            <CardText>
+                @Movie.Overview.Substring(0, Movie.Overview.Length > 200 ? 200 : Movie.Overview.Length)
+            </CardText>
+        </CardBody>
+        <CardFooter>
+            @Movie.ReleaseDate.ToString("MMMM, yyyy", languageService.GetCultureInfo())
+        </CardFooter>
+    </Card>
+</Column>
+
+@code {
+    [Parameter]
+    public Movie Movie { get; set; }
+    [Inject]
+    ILanguageService languageService { get; set; }
+
+    public EventCallback<long> OnDetailClick { get; set; }
+
+    void MovieDetails()
+    {
+        if(OnDetailClick.HasDelegate)
+            OnDetailClick.InvokeAsync(Movie.Id);
+    }
+}

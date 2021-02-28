@@ -1,0 +1,23 @@
+﻿@using AwesomeBlazor.Services.Models
+
+@foreach (var color in ThemeColors.Items.Values)
+{
+    <div>
+        @foreach (var l in Languages)
+        {
+            <span>l.Name</span>
+        }
+    </div>
+}
+
+@code {
+    [Inject]
+    private ILanguageService languageService { get; set; }
+    public Language[] Languages { get; set; } = Array.Empty<Language>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Languages = await languageService.GetLanguagesAvailable();
+    }
+}

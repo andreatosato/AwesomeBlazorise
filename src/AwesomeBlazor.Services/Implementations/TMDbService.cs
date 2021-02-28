@@ -4,32 +4,30 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
+using System.Collections.Generic;
+using AwesomeBlazor.Services.Models;
 
 namespace AwesomeBlazor.Services.Implementations
 {
     public class TMDbService : ITMDbService
     {
-        private static string ApiKey = "5d86fbbd03aaada63651d561aa926955";
-        private string GetPopularUrl(int page, string lang = "it-IT") => $"movie/popular?api_key={ApiKey}&language={lang}&page={page}";
+        private string GetPopularUrl(int page, string lang = "it-IT") => $"movie/popular?language={lang}&page={page}";
+        private string GetLanguages() => "/configuration/languages";
+
         private readonly HttpClient client;
         public TMDbService(IHttpClientFactory factory)
         {
-            client = factory.CreateClient("themoviedb"); // new TMDbClient("5d86fbbd03aaada63651d561aa926955");
+            client = factory.CreateClient("themoviedb");
         }
 
-        // https://github.com/LordMike/TMDbLib/
-        public async Task<PagedResult<Movie>> GetMoviePopularAsync(int page = 0, CancellationToken cancellationToken = default)
+        public async Task<PagedResult<Movie>> GetMoviePopularAsync(int page = 1, CancellationToken cancellationToken = default)
         {
-            var result =  await client.GetFromJsonAsync<PagedResult<Movie>>(GetPopularUrl(page));
+            return await client.GetFromJsonAsync<PagedResult<Movie>>(GetPopularUrl(page), cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
-           
-            //result.FromSearch(search);
-            //foreach(var m in search.Results)
-            //{
-            //    var movie = await client.GetMovieAsync(m.Id, MovieMethods.ReleaseDates|MovieMethods.Images|MovieMethods.Recommendations|MovieMethods.Translations);
-            //    result.Results.Add(movie);
-            //}
-            return result;
+        public async Task<Language[]> GetAvailableLanguages(CancellationToken cancellationToken = default)
+        {
+            return await client.GetFromJsonAsync<Language[]>(GetLanguages(), cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

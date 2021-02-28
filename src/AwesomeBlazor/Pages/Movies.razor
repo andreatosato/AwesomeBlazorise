@@ -1,21 +1,40 @@
-﻿@page "/movies/view"
+﻿@page "/movies/popular/view"
+@inject NavigationManager navigationManager
+@inject Services.Abstractions.ITMDbService TMDb
+@using AwesomeBlazor.Components.Movies
 
 <Heading Size="HeadingSize.Is3">Movies</Heading>
 
-<AwPagination Page="PagedMovies.Page" TotalPages="PagedMovies.TotalPages" TotalResults="PagedMovies.TotalResults"></AwPagination>
+<CardDeck>
+    <Row>
+        @foreach (var m in PagedMovies.Results)
+        {
+            <AwMovieView Movie="m"></AwMovieView>
+        }
+    </Row>
+</CardDeck>
+@*<AwPagination Page="PagedMovies.Page" TotalPages="PagedMovies.TotalPages" TotalResults="PagedMovies.TotalResults" OnPage="@ChangePage"></AwPagination>*@
 
 @code {
 
-    [Inject]
-    public Services.Abstractions.ITMDbService TMDb { get; set; }
     public PagedResult<Movie> PagedMovies { get; set; } = new PagedResult<Movie>();
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadMoviesAsync(0);
+        await LoadMoviesAsync();
     }
 
-    private async Task LoadMoviesAsync(int page = 0)
+    public async Task ChangePage(int page)
+    {
+        await LoadMoviesAsync(page);
+    }
+
+    public async Task MovieDetails(long movieId)
+    {
+        await Task.CompletedTask;
+    }
+
+    private async Task LoadMoviesAsync(int page = 1)
     {
         PagedMovies = await TMDb.GetMoviePopularAsync(page);
         StateHasChanged();

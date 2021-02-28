@@ -10,9 +10,9 @@ namespace AwesomeBlazor.Services.Models.Movies
     public class PagedResult<T>
     {
         [JsonPropertyName("page")]
-        public int Page { get; set; }
+        public int? Page { get; set; } = null;
         [JsonPropertyName("results")]
-        public List<T> Results { get; set; }
+        public List<T> Results { get; set; } = new List<T>();
         [JsonPropertyName("total_pages")]
         public int TotalPages { get; set; }
         [JsonPropertyName("total_results")]

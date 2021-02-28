@@ -1,0 +1,14 @@
+﻿<Carousel @bind-SelectedSlide="@selectedSlide">
+    @foreach (var m in Movies)
+    {
+        <CarouselSlide Name="@m.Id.ToString()">
+            <Image Source="@m.PosterUrl" Text="@m.Title" Display="Display.Block" Style="width: 100%;" />
+        </CarouselSlide>
+    }
+</Carousel>
+
+@code {
+    [Parameter]
+    public List<Movie> Movies { get; set; }
+    private string selectedSlide;
+}

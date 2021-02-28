@@ -9,6 +9,7 @@ namespace AwesomeBlazor.Services.Models.Movies
     {
         [JsonPropertyName("poster_path")]
         public string PosterPath { get; set; }
+        public string PosterUrl => $"https://image.tmdb.org/t/p/original{PosterPath}";
 
         [JsonPropertyName("adult")]
         public bool Adult { get; set; }
@@ -36,6 +37,7 @@ namespace AwesomeBlazor.Services.Models.Movies
 
         [JsonPropertyName("backdrop_path")]
         public string BackdropPath { get; set; }
+        public string BackdropUrl => $"https://image.tmdb.org/t/p/original{BackdropPath}";
 
         [JsonPropertyName("popularity")]
         public decimal Popularity { get; set; }

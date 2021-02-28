@@ -39,7 +39,11 @@ namespace AwesomeBlazor.MaterialDesign
                     SidebarOptions = new ThemeSidebarOptions { }
                 }
             });
-            builder.Services.AddHttpClient("themoviedb", h => h.BaseAddress = new Uri("https://api.themoviedb.org/3/"));
+            builder.Services.AddHttpClient("themoviedb", h => {
+                h.BaseAddress = new Uri("https://api.themoviedb.org/3/");
+                h.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZDg2ZmJiZDAzYWFhZGE2MzY1MWQ1NjFhYTkyNjk1NSIsInN1YiI6IjYwMzJjN2UyMWZiOTRmMDAzZjhlYjFlYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Ti-FDj_bD9aREXdJZVObrKJrgMgQXG097UjLmlKbDUE");
+            });
+            builder.Services.AddScoped<ILanguageService, LanguageService>();
             builder.Services.AddScoped<ITMDbService, TMDbService>();
 
             builder.RootComponents.Add<App>("#app");

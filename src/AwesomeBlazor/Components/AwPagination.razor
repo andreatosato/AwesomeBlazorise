@@ -1,36 +1,39 @@
-﻿<Pagination>
-    @if (ShowPrevButton)
-    {
-        <PaginationItem @onclick="() => SelectPage(Page - 1)">
-            <PaginationLink>
-                <span aria-hidden="true">«</span>
-            </PaginationLink>
-        </PaginationItem>
-    }
-    @for (int i = 0; i < Pages.Count; i++)
-    {
-        <PaginationItem @onclick="() => SelectPage(Pages[i])">
-            <PaginationLink>
-                @Pages[i]
-            </PaginationLink>
-        </PaginationItem>
-    }
-    @if (ShowNextButton)
-    {
-        <PaginationItem @onclick="() => SelectPage(Page + 1)">
-            <PaginationLink>
-                <span aria-hidden="true">»</span>
-            </PaginationLink>
-        </PaginationItem>
-    }
-</Pagination>
+﻿@if (Page.HasValue)
+{
+    <Pagination>
+        @if (ShowPrevButton)
+        {
+            <PaginationItem @onclick="() => SelectPage(Page.Value - 1)">
+                <PaginationLink>
+                    <span aria-hidden="true">«</span>
+                </PaginationLink>
+            </PaginationItem>
+        }
+        @for (int i = 0; i < Pages.Length; i++)
+        {
+            <PaginationItem @onclick="() => SelectPage(Pages[i])">
+                <PaginationLink>
+                    @Pages[i]
+                </PaginationLink>
+            </PaginationItem>
+        }
+        @if (ShowNextButton)
+        {
+            <PaginationItem @onclick="() => SelectPage(Page.Value + 1)">
+                <PaginationLink>
+                    <span aria-hidden="true">»</span>
+                </PaginationLink>
+            </PaginationItem>
+        }
+    </Pagination>
+}
 
 @code {
-
+    [Parameter]
     public EventCallback<int> OnPage { get; set; }
 
     [Parameter]
-    public int Page { get; set; }
+    public int? Page { get; set; }
 
     [Parameter]
     public int TotalPages { get; set; }
@@ -38,14 +41,26 @@
     [Parameter]
     public int TotalResults { get; set; }
 
-    public List<int> Pages { get; set; }
-    public bool ShowPrevButton { get; set; }
-    public bool ShowNextButton { get; set; }
+    public int[] Pages { get; set; } = Array.Empty<int>();
+    public bool ShowPrevButton => (Page != 1);
+    public bool ShowNextButton => (Page != TotalPages);
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        ShowPrevButton = (Page != 1);
-        ShowNextButton = (Page != TotalPages);
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (Page.HasValue && !firstRender)
+        {
+            if (Page.Value > 3)
+            {
+                Pages = new [] { Page.Value - 1, Page.Value, Page.Value + 1 };
+            }
+            else
+            {
+                Pages = new [] { 1, 2, 3 };
+            }
+            StateHasChanged();
+        }
     }
 
     void SelectPage(int page)

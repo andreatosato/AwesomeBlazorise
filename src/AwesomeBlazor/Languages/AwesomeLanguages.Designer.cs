@@ -61,6 +61,33 @@ namespace AwesomeBlazor.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Popularity.
+        /// </summary>
+        internal static string Popularity {
+            get {
+                return ResourceManager.GetString("Popularity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vote Averange.
+        /// </summary>
+        internal static string VoteAverange {
+            get {
+                return ResourceManager.GetString("VoteAverange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vote Count.
+        /// </summary>
+        internal static string VoteCount {
+            get {
+                return ResourceManager.GetString("VoteCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Votes.
         /// </summary>
         internal static string Votes {

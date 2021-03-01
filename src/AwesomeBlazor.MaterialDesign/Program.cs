@@ -6,8 +6,11 @@ using Blazorise.Icons.Material;
 using Blazorise.Material;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 using System;
+using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace AwesomeBlazor.MaterialDesign
@@ -39,6 +42,7 @@ namespace AwesomeBlazor.MaterialDesign
                     SidebarOptions = new ThemeSidebarOptions { }
                 }
             });
+            builder.Services.AddLocalization();
             builder.Services.AddHttpClient("themoviedb", h => {
                 h.BaseAddress = new Uri("https://api.themoviedb.org/3/");
                 h.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZDg2ZmJiZDAzYWFhZGE2MzY1MWQ1NjFhYTkyNjk1NSIsInN1YiI6IjYwMzJjN2UyMWZiOTRmMDAzZjhlYjFlYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Ti-FDj_bD9aREXdJZVObrKJrgMgQXG097UjLmlKbDUE");
@@ -49,12 +53,25 @@ namespace AwesomeBlazor.MaterialDesign
             builder.RootComponents.Add<App>("#app");
 
             var host = builder.Build();
+            await SetBrowserCulture(host);
 
             host.Services
                 .UseMaterialProviders()
                 .UseMaterialIcons();
 
             await host.RunAsync();
+        }
+
+        private static async Task SetBrowserCulture(WebAssemblyHost host)
+        {
+            var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
+            var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
+            if (result != null)
+            {
+                var culture = new CultureInfo(result);
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+            }
         }
     }
 }

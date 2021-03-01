@@ -1,0 +1,82 @@
+﻿@inject NavigationManager navigationManager
+@using AwesomeBlazor.Languages
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AwesomeLanguages> Loc
+
+<Card>
+    <CardHeader>
+        @Loc["Popularity"]
+    </CardHeader>
+    <CardBody>
+        <Chart @ref="radarChart" Type="ChartType.Radar" TItem="decimal" Clicked="@OnClicked" />
+    </CardBody>
+</Card>
+
+@code {
+
+    [Parameter]
+    public List<Movie> Data { get; set; }
+    [Parameter]
+    public EventCallback Draw { get; set; }
+
+    private Chart<decimal> radarChart;
+    private Random colorGenerator = new Random();
+    private IReadOnlyCollection<string> labels;
+    private List<decimal> bars;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
+        bars = Data.Select(t => t.Popularity).ToList();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (!firstRender)
+        {
+            await radarChart.Clear();
+            await radarChart.AddLabelsDatasetsAndUpdate(labels, GetLineChartDataset());
+        }
+    }
+
+    LineChartDataset<decimal> GetLineChartDataset()
+    {
+        var colors = CreateColors();
+
+        return new LineChartDataset<decimal>
+        {
+            Label = "# of popularity",
+            Data = bars,
+            BackgroundColor = colors.Background,
+            BorderColor = colors.Border,
+            BorderWidth = 1
+        };
+    }
+
+    private ChartColor CreateColor()
+    {
+        return ChartColor.FromRgba((byte)colorGenerator.Next(0, 255), (byte)colorGenerator.Next(0, 255), (byte)colorGenerator.Next(0, 255), 0.2f);
+    }
+
+    private (List<string> Background, List<string> Border) CreateColors()
+    {
+        List<string> backgroundColors = new List<string>();
+        List<string> borderColors = new List<string>();
+        for (int i = 0; i < Data.Count; i++)
+        {
+            ChartColor color = CreateColor();
+            backgroundColors.Add(color);
+            color.A = 1f;
+            borderColors.Add(color);
+        }
+
+        return (backgroundColors, borderColors);
+    }
+
+    private void OnClicked(ChartMouseEventArgs e)
+    {
+        var currentElement = Data[e.Index];
+        //navigationManager.NavigateTo()
+    }
+}

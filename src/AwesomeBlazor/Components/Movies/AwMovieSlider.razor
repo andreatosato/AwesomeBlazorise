@@ -1,15 +1,11 @@
-﻿<Row>
-    <Column ColumnSize="ColumnSize.IsQuarter.WithOffset.OnDesktop.IsQuarter.OnDesktop.IsQuarter.WithOffset.OnFullHD.IsQuarter.OnFullHD">
-        <Carousel @bind-SelectedSlide="@selectedSlide" Margin="Margin.Is2">
-            @foreach (var m in Movies)
-            {
-                <CarouselSlide Name="@m.Id.ToString()" @onclick="() => MovieClick(m.Id)">
-                    <Image Source="@m.PosterUrl" Text="@m.Title" Display="Display.Block" Style="max-width: 100%" />
-                </CarouselSlide>
-            }
-        </Carousel>
-    </Column>
-</Row>
+﻿<Carousel @bind-SelectedSlide="@selectedSlide" Margin="Margin.Is2">
+    @foreach (var m in Movies)
+    {
+        <CarouselSlide Name="@m.Id.ToString()" @onclick="() => MovieClick(m.Id)">
+            <Image Source="@m.PosterUrl" Text="@m.Title" Display="Display.Block" Style="max-width: 100%" />
+        </CarouselSlide>
+    }
+</Carousel>
 
 @code {
     [Parameter]
@@ -25,7 +21,7 @@
         base.OnParametersSet();
         if(Movies!= null && Movies.Count > 0)
         {
-            Movies = Movies.OrderBy(t => t.VoteAverage).Take(5).ToList();
+            Movies = Movies.OrderBy(t => t.VoteAverage).ToList();
             selectedSlide = Movies.FirstOrDefault().Id.ToString();
         }
     }

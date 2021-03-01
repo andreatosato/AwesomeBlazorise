@@ -1,38 +1,37 @@
 ﻿@page "/"
 @using AwesomeBlazor.Components.Movies
 @using Services.Models.Trending
+@using AwesomeBlazor.Components.Charts
 @inject Services.Abstractions.ITMDbService TMDb
 
 <Heading Size="HeadingSize.Is1" Margin="Margin.Is3.FromBottom">Blazorise</Heading>
 
 <Row>
-    <Column>
-        <Chart @ref="doughnutChart" Type="ChartType.Line" TItem="decimal" Clicked="@OnClicked" />
+    <Column ColumnSize="ColumnSize.IsThird">
+        <AwChartVoteAverange Data="PagedMovies.Results"></AwChartVoteAverange>
     </Column>
-    <Column></Column>
-    <Column></Column>
+    <Column ColumnSize="ColumnSize.IsThird">
+        <AwChartPopularity Data="PagedMovies.Results"></AwChartPopularity>
+    </Column>
+    <Column ColumnSize="ColumnSize.IsThird">
+        <AwChartVoteCount Data="PagedMovies.Results"></AwChartVoteCount>
+    </Column>
 </Row>
 
 <Divider></Divider>
-
-<AwMovieSlider Movies="PagedMovies.Results"></AwMovieSlider>
+<Row>
+    <Column ColumnSize="ColumnSize.IsThird.WithOffset.OnDesktop.IsThird.OnDesktop.IsThird.WithOffset.OnFullHD.IsThird.OnFullHD">
+        <AwMovieSlider Movies="PagedMovies.Results"></AwMovieSlider>
+    </Column>
+</Row>
 
 @code {
 
     public PagedResult<Movie> PagedMovies { get; set; } = new PagedResult<Movie>();
-    Chart<decimal> doughnutChart;
-    List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f), ChartColor.FromRgba(255, 206, 86, 0.2f), ChartColor.FromRgba(75, 192, 192, 0.2f), ChartColor.FromRgba(153, 102, 255, 0.2f), ChartColor.FromRgba(255, 159, 64, 0.2f) };
-    List<string> borderColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f), ChartColor.FromRgba(255, 206, 86, 1f), ChartColor.FromRgba(75, 192, 192, 1f), ChartColor.FromRgba(153, 102, 255, 1f), ChartColor.FromRgba(255, 159, 64, 1f) };
 
     protected override async Task OnInitializedAsync()
     {
         await LoadMoviesAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-        await doughnutChart.AddLabelsDatasetsAndUpdate(PagedMovies.Results.Select(t => t.Title).ToList(), GetLineChartDataset());
     }
 
     private async Task LoadMoviesAsync(int page = 1)
@@ -43,24 +42,6 @@
             TimeWindow = "day"
         };
         PagedMovies = await TMDb.GetTrandingAsync(trending, page);
-    }
-
-    LineChartDataset<decimal> GetLineChartDataset()
-    {
-        return new LineChartDataset<decimal>
-        {
-            Label = "# of movies",
-            Data = PagedMovies.Results.Select(t => t.Popularity).ToList(),
-            BackgroundColor = backgroundColors,
-            BorderColor = borderColors,
-            BorderWidth = 1
-        };
-    }
-
-    void OnClicked(ChartMouseEventArgs e)
-    {
-        var model = e.Model as DoughnutChartModel;
-
-        Console.WriteLine($"{model.X}-{model.Y}");
+        PagedMovies.Results = PagedMovies.Results.Take(5).ToList();
     }
 }

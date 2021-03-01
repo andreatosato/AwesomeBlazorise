@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
-using System.Collections.Generic;
 using AwesomeBlazor.Services.Models;
 using AwesomeBlazor.Services.Models.Trending;
 

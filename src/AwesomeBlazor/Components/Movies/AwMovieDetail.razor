@@ -1,5 +1,45 @@
-﻿<h3>AwMovieDetail</h3>
+﻿@inject Services.Abstractions.ITMDbService TMDb
+@using AwesomeBlazor.Languages
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AwesomeLanguages> Loc
+
+@if (Movie != null)
+{
+    <Table Striped="true">
+        <TableHeader ThemeContrast="@ThemeContrast.Dark">
+            <TableHeaderCell>@Loc["Title"]</TableHeaderCell>
+            <TableHeaderCell>@Movie.Title</TableHeaderCell>
+        </TableHeader>
+        <TableBody>
+            <TableRow>
+                <TableRowCell>@Loc["VoteAverage"]</TableRowCell>
+                <TableRowCell>
+                    <Progress Margin="Margin.Is3.FromBottom">
+                        <ProgressBar Value="@((int)Movie.VoteAverage * 10)" Striped="true" Background="Background.Success" />
+                    </Progress>
+                </TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell>@Loc["VoteCount"]</TableRowCell>
+                <TableRowCell>@Movie.VoteCount</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell>@Loc["ReleaseDate"]</TableRowCell>
+                <TableRowCell><b>@Movie.ReleaseDate.ToString("d")</b></TableRowCell>
+            </TableRow>
+        </TableBody>
+    </Table>
+
+    <Alert Color="Color.Info" Visible="true">
+        <Heading Size="HeadingSize.Is4" TextColor="TextColor.Success">
+            @Movie.OriginalTitle
+        </Heading>
+        <Paragraph>
+            @Movie.Overview
+        </Paragraph>
+    </Alert>
+}
 
 @code {
-
+    [Parameter]
+    public Movie Movie { get; set; }
 }

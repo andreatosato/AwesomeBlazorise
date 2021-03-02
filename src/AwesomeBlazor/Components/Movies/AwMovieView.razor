@@ -30,10 +30,11 @@
 @code {
     [Parameter]
     public Movie Movie { get; set; }
+    [Parameter]
+    public EventCallback<long> OnDetailClick { get; set; }
+
     [Inject]
     ILanguageService languageService { get; set; }
-
-    public EventCallback<long> OnDetailClick { get; set; }
 
     void MovieDetails()
     {

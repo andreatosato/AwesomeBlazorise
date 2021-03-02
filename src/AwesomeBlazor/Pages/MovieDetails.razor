@@ -1,0 +1,38 @@
+﻿@page "/movies/popular/details/{MovieId:long}"
+@inject NavigationManager navigationManager
+@inject Services.Abstractions.ITMDbService TMDb
+@using AwesomeBlazor.Components.Movies
+
+<br />
+@if (CurrentMovies != null)
+{
+    <Row>
+        <Column ColumnSize="ColumnSize.IsThird.OnDesktop.IsThird.OnFullHD">
+            <Card>
+                <CardImage Source="@CurrentMovies.BackdropUrl"></CardImage>
+                <CardFooter>@CurrentMovies.OriginalTitle</CardFooter>
+            </Card>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is8.OnDesktop.Is8.OnFullHD">
+            <AwMovieDetail Movie="CurrentMovies"></AwMovieDetail>
+        </Column>
+    </Row>
+}
+
+@code {
+    [Parameter]
+    public long MovieId { get; set; }
+    public Movie CurrentMovies { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await GetMovieAsync(MovieId);
+    }
+
+    public async Task GetMovieAsync(long movieId)
+    {
+        if (movieId > 0)
+            CurrentMovies = await TMDb.GetMovieAsync(movieId);
+    }
+}

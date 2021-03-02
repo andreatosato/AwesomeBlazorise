@@ -9,7 +9,7 @@
     <Row>
         @foreach (var m in PagedMovies.Results)
         {
-            <AwMovieView Movie="m"></AwMovieView>
+            <AwMovieView Movie="m" OnDetailClick="MovieDetails"></AwMovieView>
         }
     </Row>
 </CardDeck>
@@ -29,9 +29,9 @@
         await LoadMoviesAsync(page);
     }
 
-    public async Task MovieDetails(long movieId)
+    public void MovieDetails(long movieId)
     {
-        await Task.CompletedTask;
+        navigationManager.NavigateTo($"/movies/popular/details/{movieId}");
     }
 
     private async Task LoadMoviesAsync(int page = 1)

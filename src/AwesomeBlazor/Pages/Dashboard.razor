@@ -4,7 +4,7 @@
 @using AwesomeBlazor.Components.Charts
 @inject Services.Abstractions.ITMDbService TMDb
 
-<Heading Size="HeadingSize.Is1" Margin="Margin.Is3.FromBottom">Blazorise</Heading>
+<Heading Size="HeadingSize.Is6" Margin="Margin.Is3.FromBottom">Movies</Heading>
 
 <Row>
     <Column ColumnSize="ColumnSize.IsThird">
@@ -20,14 +20,18 @@
 
 <Divider></Divider>
 <Row>
-    <Column ColumnSize="ColumnSize.IsThird.WithOffset.OnDesktop.IsThird.OnDesktop.IsThird.WithOffset.OnFullHD.IsThird.OnFullHD">
-        <AwMovieSlider Movies="PagedMovies.Results"></AwMovieSlider>
+    <Column ColumnSize="ColumnSize.IsThird.OnDesktop.IsThird.OnFullHD">
+        <AwMovieSlider Movies="PagedMovies.Results" OnMovieClick="GetMovie"></AwMovieSlider>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is8.OnDesktop.Is8.OnFullHD">
+        <AwMovieDetail Movie="SelectedMovie"></AwMovieDetail>
     </Column>
 </Row>
 
 @code {
-
+    public long currentMovieId = 0;
     public PagedResult<Movie> PagedMovies { get; set; } = new PagedResult<Movie>();
+    public Movie SelectedMovie { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -36,12 +40,13 @@
 
     private async Task LoadMoviesAsync(int page = 1)
     {
-        var trending = new TrendingFilter()
-        {
-            Type = "all",
-            TimeWindow = "day"
-        };
-        PagedMovies = await TMDb.GetTrandingAsync(trending, page);
+        PagedMovies = await TMDb.GetOrderByVoteCountAsync(page);
         PagedMovies.Results = PagedMovies.Results.Take(5).ToList();
+    }
+
+    public async Task GetMovie(long movieId)
+    {
+        if (movieId > 0)
+            SelectedMovie = await TMDb.GetMovieAsync(movieId);
     }
 }

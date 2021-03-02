@@ -1,4 +1,4 @@
-﻿<Carousel @bind-SelectedSlide="@selectedSlide" Margin="Margin.Is2">
+﻿<Carousel @bind-SelectedSlide="selectedSlide" Margin="Margin.Is2">
     @foreach (var m in Movies)
     {
         <CarouselSlide Name="@m.Id.ToString()" @onclick="() => MovieClick(m.Id)">
@@ -22,7 +22,8 @@
         if(Movies!= null && Movies.Count > 0)
         {
             Movies = Movies.OrderBy(t => t.VoteAverage).ToList();
-            selectedSlide = Movies.FirstOrDefault().Id.ToString();
+            if(string.IsNullOrEmpty(selectedSlide))
+                selectedSlide = Movies.FirstOrDefault().Id.ToString();
         }
     }
 

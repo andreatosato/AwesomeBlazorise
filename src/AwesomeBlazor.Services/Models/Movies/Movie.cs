@@ -20,7 +20,7 @@ namespace AwesomeBlazor.Services.Models.Movies
         public DateTimeOffset ReleaseDate { get; set; }
 
         [JsonPropertyName("genre_ids")]
-        public List<GenreMovie> GenreIds { get; set; }
+        public List<GenreMovie> GenreIds { get; set; } = new List<GenreMovie>();
 
         [JsonPropertyName("id")]
         public long Id { get; set; }

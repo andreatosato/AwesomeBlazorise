@@ -33,6 +33,9 @@
                                     <BarDropdownItem To="/movies/popular/view">
                                         Popular
                                     </BarDropdownItem>
+                                    <BarDropdownItem To="/movies/grid/view">
+                                        Grid
+                                    </BarDropdownItem>
                                 </BarDropdownMenu>
                             </BarDropdown>
                         </BarItem>
@@ -196,6 +199,4 @@
     private bool topbarVisible = false;
 
     [CascadingParameter] protected Theme Theme { get; set; }
-
-    RenderFragment customIcon =@<img src="/brand-logo.png" style="width:32px; height: 32px" />;
 }

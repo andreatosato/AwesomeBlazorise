@@ -26,7 +26,7 @@
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
-        labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
+        labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? (string.IsNullOrEmpty(t.OriginalTitle) ? "No title" : t.OriginalTitle) : t.Title).ToList();
         bars = Data.Select(t => t.Popularity).ToList();
     }
 

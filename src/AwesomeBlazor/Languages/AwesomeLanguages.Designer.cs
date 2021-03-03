@@ -61,6 +61,24 @@ namespace AwesomeBlazor.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gendres.
+        /// </summary>
+        internal static string Gendres {
+            get {
+                return ResourceManager.GetString("Gendres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original Language.
+        /// </summary>
+        internal static string OriginalLanguage {
+            get {
+                return ResourceManager.GetString("OriginalLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Popularity.
         /// </summary>
         internal static string Popularity {

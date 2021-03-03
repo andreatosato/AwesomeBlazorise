@@ -1,36 +1,37 @@
 ﻿@if (Page.HasValue)
 {
-    <Pagination>
-        @if (ShowPrevButton)
-        {
-            <PaginationItem @onclick="() => SelectPage(Page.Value - 1)">
-                <PaginationLink>
-                    <span aria-hidden="true">«</span>
-                </PaginationLink>
-            </PaginationItem>
-        }
-        @for (int i = 0; i < Pages.Length; i++)
-        {
-            <PaginationItem @onclick="() => SelectPage(Pages[i])">
-                <PaginationLink>
-                    @Pages[i]
-                </PaginationLink>
-            </PaginationItem>
-        }
-        @if (ShowNextButton)
-        {
-            <PaginationItem @onclick="() => SelectPage(Page.Value + 1)">
-                <PaginationLink>
-                    <span aria-hidden="true">»</span>
-                </PaginationLink>
-            </PaginationItem>
-        }
-    </Pagination>
+<Pagination>
+    @if (ShowPrevButton)
+    {
+        <PaginationItem @onclick="() => SelectPage(Page.Value - 1)">
+            <PaginationLink>
+                <span aria-hidden="true">«</span>
+            </PaginationLink>
+        </PaginationItem>
+    }
+    @for (int i = 0; i < Pages.Length; i++)
+    {
+        var item = Pages[i];
+        <PaginationItem Active="@(Page.Value == item)">
+            <PaginationLink Clicked="() => SelectPage(item)">
+                @item
+            </PaginationLink>
+        </PaginationItem>
+    }
+    @if (ShowNextButton)
+    {
+        <PaginationItem @onclick="() => SelectPage(Page.Value + 1)">
+            <PaginationLink>
+                <span aria-hidden="true">»</span>
+            </PaginationLink>
+        </PaginationItem>
+    }
+</Pagination>
 }
 
 @code {
     [Parameter]
-    public EventCallback<int> OnPage { get; set; }
+    public EventCallback<int> OnPage { get; set; } = new EventCallback<int>();
 
     [Parameter]
     public int? Page { get; set; }
@@ -45,21 +46,18 @@
     public bool ShowPrevButton => (Page != 1);
     public bool ShowNextButton => (Page != TotalPages);
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnParametersSet()
     {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (Page.HasValue && !firstRender)
+        if (Page.HasValue)
         {
             if (Page.Value > 3)
             {
-                Pages = new [] { Page.Value - 1, Page.Value, Page.Value + 1 };
+                Pages = new[] { Page.Value - 2, Page.Value - 1, Page.Value, Page.Value + 1, Page.Value + 2 };
             }
             else
             {
-                Pages = new [] { 1, 2, 3 };
+                Pages = new[] { 1, 2, 3, 4, 5 };
             }
-            StateHasChanged();
         }
     }
 

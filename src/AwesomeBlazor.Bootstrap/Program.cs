@@ -39,10 +39,10 @@ namespace AwesomeBlazor.Bootstrap
                         HorizontalHeight = "64px",
                         DarkColors = new ThemeBarColorOptions {
                             BackgroundColor = "#1A1D1A", 
-                            Color = "#26413C", 
+                            Color = "#FFFFFF", 
                             BrandColorOptions = new ThemeBarBrandColorOptions { BackgroundColor = "#1A1D1A" }, 
                             DropdownColorOptions = new ThemeBarDropdownColorOptions { BackgroundColor = "03120E" }, 
-                            ItemColorOptions = new ThemeBarItemColorOptions { ActiveBackgroundColor = "#26413C", ActiveColor = "#03120E", HoverBackgroundColor = "#3E505B", HoverColor = "#03120E" } } },                   
+                            ItemColorOptions = new ThemeBarItemColorOptions { ActiveBackgroundColor = "#26413C", ActiveColor = "#FFFFFF", HoverBackgroundColor = "#3E505B", HoverColor = "#FFFFFF" } } },                   
                     ColorOptions = new ThemeColorOptions { Primary = "#A65529" },
                     BackgroundOptions = new ThemeBackgroundOptions { Primary = "#0288D1"},
                     InputOptions = new ThemeInputOptions { CheckColor = "#0288D1"},
@@ -61,10 +61,6 @@ namespace AwesomeBlazor.Bootstrap
 
             var host = builder.Build();
             await SetBrowserCulture(host);
-
-            host.Services
-                .UseBootstrapProviders()
-                .UseFontAwesomeIcons();
 
             await host.RunAsync();
         }

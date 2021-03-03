@@ -1,20 +1,10 @@
-﻿@page "/movies/popular/view"
+﻿@page "/movies/grid/view"
 @inject NavigationManager navigationManager
 @inject Services.Abstractions.ITMDbService TMDb
 @using AwesomeBlazor.Components.Movies
 
-<Heading Size="HeadingSize.Is3">Movies</Heading>
-
-<CardDeck>
-    <Row>
-        @foreach (var m in PagedMovies.Results)
-        {
-            <AwMovieView Movie="m" OnDetailClick="MovieDetails"></AwMovieView>
-        }
-    </Row>
-</CardDeck>
-
-<AwPagination Page="PagedMovies.Page" TotalPages="PagedMovies.TotalPages" TotalResults="PagedMovies.TotalResults" OnPage="@ChangePage"></AwPagination>
+<h3>Movies Grid</h3>
+<AwMovieGrid  PagedMovie="PagedMovies" ChangePage="ChangePageAsync"></AwMovieGrid>
 
 @code {
 
@@ -27,8 +17,13 @@
 
     public async Task ChangePage(int page)
     {
-        if(PagedMovies?.Page != page)
+        if (PagedMovies?.Page != page)
             await LoadMoviesAsync(page);
+    }
+
+    private async Task ChangePageAsync(int nextPage)
+    {
+        await LoadMoviesAsync(nextPage);
     }
 
     public void MovieDetails(long movieId)

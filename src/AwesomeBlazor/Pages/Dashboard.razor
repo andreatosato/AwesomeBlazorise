@@ -8,10 +8,10 @@
 
 <Row>
     <Column ColumnSize="ColumnSize.IsThird">
-        <AwChartVoteAverange Data="PagedMovies.Results"></AwChartVoteAverange>
+        <AwChartVoteAverange Data="PagedMovies.Results" ShouldRenderComponent="shouldRenderCharts"></AwChartVoteAverange>
     </Column>
     <Column ColumnSize="ColumnSize.IsThird">
-        <AwChartPopularity Data="PagedMovies.Results"></AwChartPopularity>
+        <AwChartPopularity Data="PagedMovies.Results" ShouldRenderComponent="shouldRenderCharts"></AwChartPopularity>
     </Column>
     <Column ColumnSize="ColumnSize.IsThird">
         <AwChartVoteCount Data="PagedMovies.Results"></AwChartVoteCount>
@@ -32,10 +32,17 @@
     public long currentMovieId = 0;
     public PagedResult<Movie> PagedMovies { get; set; } = new PagedResult<Movie>();
     public Movie SelectedMovie { get; set; }
+    private bool shouldRenderCharts = true;
 
     protected override async Task OnInitializedAsync()
     {
         await LoadMoviesAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+            shouldRenderCharts = false;
     }
 
     private async Task LoadMoviesAsync(int page = 1)

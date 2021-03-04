@@ -4,36 +4,47 @@
 
 @if (PagedMovie.Results.Count > 0)
 {
-    <DataGrid TItem="Movie" @ref="dataGrid"
-              PageChanged="PageChanged"
-              PageSize="PagedMovie.Results.Count"
-              Data="@PagedMovie.Results"
-              CurrentPage="@PagedMovie.Page.Value"
-              Responsive="true"
-              ResizeMode="@DataGridResizeMode.Header"
-              ShowPager="@showPager"
-              ShowPageSizes="@showPageSizes"
-              Filterable="@filterable"
-              Sortable="@sortable"
-              Striped="true"
-              TotalItems="@PagedMovie.TotalResults"
-              @bind-SelectedRow="@selectedMovie">
-        <DataGridCommandColumn TItem="Movie" />
-        <DataGridColumn TItem="Movie" Field="@nameof(Movie.Id)" Caption="#" Sortable="false" />
-        <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalTitle)" Caption="Original Title" Editable="true" />
-        <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalLanguage)" Caption="@Loc["OriginalLanguage"]" Editable="true" />
-        <DataGridNumericColumn TItem="Movie" Field="@nameof(Movie.Popularity)" Caption="@Loc["Popularity"]" Editable="true" />
-        <DataGridDateColumn TItem="Movie" Field="@nameof(Movie.ReleaseDate)" Caption="@Loc["ReleaseDate"]" Editable="true" Sortable="true" />
-        <DataGridNumericColumn TItem="Movie" Field="@nameof(Movie.VoteAverage)" Caption="@Loc["VoteAverage"]" Editable="true" />
-        @*<DataGridColumn TItem="Movie" Field="@nameof(Movie.Title)" Caption="@Loc["Title"]" Editable="true">
-            <DisplayTemplate>
-                @($"{( context as Movie )?.Title} €")
-            </DisplayTemplate>
-            <EditTemplate>
-                <NumericEdit TValue="decimal" Value="@((decimal)(((CellEditContext)context).CellValue))" ValueChanged="@(v=>((CellEditContext)context).CellValue=v)" />
-            </EditTemplate>
-        </DataGridColumn>*@
-    </DataGrid>
+<DataGrid TItem="Movie" @ref="dataGrid"
+          ReadData="ReadData"
+          PageSize="PagedMovie.Results.Count"
+          Data="@PagedMovie.Results"
+          CurrentPage="@PagedMovie.Page.Value"
+          Responsive="true"
+          ResizeMode="@DataGridResizeMode.Header"
+          ShowPager="@showPager"
+          ShowPageSizes="@showPageSizes"
+          Filterable="@filterable"
+          Sortable="@sortable"
+          Striped="true"
+          TotalItems="@PagedMovie.TotalResults"
+          @bind-SelectedRow="@selectedMovie">
+    <DataGridCommandColumn TItem="Movie" DeleteCommandAllowed="true" CancelCommandAllowed="true" EditCommandAllowed="true" NewCommandAllowed="true" />
+    <DataGridColumn TItem="Movie" Field="@nameof(Movie.Id)" Caption="#" Sortable="false" />
+    <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalTitle)" Caption="Original Title" Editable="true" />
+    <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalLanguage)" Caption="@Loc["OriginalLanguage"]" Editable="true" />
+    <DataGridSelectColumn TItem="Movie" Field="@nameof(Movie.GenreIds)" Caption="@Loc["Gendre"]">
+        <DisplayTemplate>
+            @{
+                var gendre = (context as Movie)?.GenreIds;
+
+                if (gendre != null)
+                {
+                    foreach (var g in gendre)
+                    {
+                        @(g)
+                    }
+                }
+            }
+        </DisplayTemplate>
+    </DataGridSelectColumn>
+    <DataGridNumericColumn TItem="Movie" Field="@nameof(Movie.Popularity)" Caption="@Loc["Popularity"]" Editable="true" />
+    <DataGridDateColumn TItem="Movie" Field="@nameof(Movie.ReleaseDate)" Caption="@Loc["ReleaseDate"]" Editable="true" Sortable="true" />
+    <DataGridNumericColumn TItem="Movie" Field="@nameof(Movie.VoteAverage)" Caption="@Loc["VoteAverage"]" Editable="true" />
+</DataGrid>
+
+    @*Editable="editable"
+        EditMode="editMode"
+        SortMode="sortMode"*@
 }
 
 @code {
@@ -41,7 +52,7 @@
     public PagedResult<Movie> PagedMovie { get; set; } = new PagedResult<Movie>();
 
     [Parameter]
-    public EventCallback<int> ChangePage { get; set; }
+    public EventCallback<DataGridReadDataEventArgs<Movie>> ReadData { get; set; }
 
     public Movie selectedMovie;
 
@@ -50,17 +61,9 @@
 
 
     DataGrid<Movie> dataGrid;
-    //bool editable = true;
-    //bool resizable = true;
+    bool editable = true;
     bool sortable = true;
     bool filterable = true;
     bool showPager = true;
     bool showPageSizes = false;
-    //bool showButtonRow = true;
-
-    async Task PageChanged(DataGridPageChangedEventArgs dg)
-    {
-        if(PagedMovie.Page != dg.Page)
-            await ChangePage.InvokeAsync(dg.Page);
-    }
 }

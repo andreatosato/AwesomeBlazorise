@@ -2,9 +2,10 @@
 @inject NavigationManager navigationManager
 @inject Services.Abstractions.ITMDbService TMDb
 @using AwesomeBlazor.Components.Movies
+@using System.Threading 
 
 <h3>Movies Grid</h3>
-<AwMovieGrid  PagedMovie="PagedMovies" ChangePage="ChangePageAsync"></AwMovieGrid>
+<AwMovieGrid  PagedMovie="PagedMovies" ReadData="async (e) => await ReadDataAsync(e)"></AwMovieGrid>
 
 @code {
 
@@ -15,15 +16,10 @@
         await LoadMoviesAsync();
     }
 
-    public async Task ChangePage(int page)
+    private async Task ReadDataAsync(DataGridReadDataEventArgs<Movie> e)
     {
-        if (PagedMovies?.Page != page)
-            await LoadMoviesAsync(page);
-    }
-
-    private async Task ChangePageAsync(int nextPage)
-    {
-        await LoadMoviesAsync(nextPage);
+        await LoadMoviesAsync(e.Page, e.CancellationToken);
+        StateHasChanged();
     }
 
     public void MovieDetails(long movieId)
@@ -31,9 +27,8 @@
         navigationManager.NavigateTo($"/movies/popular/details/{movieId}");
     }
 
-    private async Task LoadMoviesAsync(int page = 1)
+    private async Task LoadMoviesAsync(int page = 1, CancellationToken cancellationToken = default)
     {
         PagedMovies = await TMDb.GetMoviePopularAsync(page);
-        StateHasChanged();
     }
 }

@@ -7,44 +7,45 @@
         @Loc["Popularity"]
     </CardHeader>
     <CardBody>
-        <Chart @ref="radarChart" Type="ChartType.Radar" TItem="decimal" Clicked="@OnClicked" />
+        <Chart @ref="pieChart" Type="ChartType.Pie" TItem="decimal" Clicked="@OnClicked" />
     </CardBody>
 </Card>
 
 @code {
 
-    [Parameter]
-    public List<Movie> Data { get; set; }
-    [Parameter]
-    public EventCallback Draw { get; set; }
+        [Parameter]
+        public List<Movie> Data { get; set; }
 
-    private Chart<decimal> radarChart;
+        [Parameter]
+        public EventCallback Draw { get; set; }
+
+        [Parameter]
+        public bool ShouldRenderComponent { get; set; }
+
+    private Chart<decimal> pieChart;
     private Random colorGenerator = new Random();
     private IReadOnlyCollection<string> labels;
     private List<decimal> bars;
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? (string.IsNullOrEmpty(t.OriginalTitle) ? "No title" : t.OriginalTitle) : t.Title).ToList();
-        bars = Data.Select(t => t.Popularity).ToList();
-    }
+    private bool shouldRenderAfterStart = true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         base.OnAfterRender(firstRender);
         if (!firstRender)
         {
-            await radarChart.Clear();
-            await radarChart.AddLabelsDatasetsAndUpdate(labels, GetLineChartDataset());
+            labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
+            bars = Data.Select(t => t.VoteAverage).ToList();
+            await pieChart.Clear();
+            await pieChart.AddLabelsDatasetsAndUpdate(labels, GetPieChartDataset());
+            shouldRenderAfterStart = false;
         }
     }
 
-    LineChartDataset<decimal> GetLineChartDataset()
+    PieChartDataset<decimal> GetPieChartDataset()
     {
         var colors = CreateColors();
 
-        return new LineChartDataset<decimal>
+        return new PieChartDataset<decimal>
         {
             Label = "# of popularity",
             Data = bars,
@@ -76,7 +77,11 @@
 
     private void OnClicked(ChartMouseEventArgs e)
     {
-        var currentElement = Data[e.Index];
-        //navigationManager.NavigateTo()
+        navigationManager.NavigateTo($"movies/popular/details/{Data[e.Index].Id}");
+    }
+
+    protected override bool ShouldRender()
+    {
+        return ShouldRenderComponent || shouldRenderAfterStart;
     }
 }

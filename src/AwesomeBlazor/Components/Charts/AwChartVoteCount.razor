@@ -23,9 +23,8 @@
     private IReadOnlyCollection<string> labels;
     private List<decimal> bars;
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
-        await base.OnParametersSetAsync();
         labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
         bars = Data.Select(t => t.Popularity).ToList();
     }
@@ -76,7 +75,6 @@
 
     private void OnClicked(ChartMouseEventArgs e)
     {
-        var currentElement = Data[e.Index];
-        //navigationManager.NavigateTo()
+        navigationManager.NavigateTo($"movies/popular/details/{Data[e.Index].Id}");
     }
 }

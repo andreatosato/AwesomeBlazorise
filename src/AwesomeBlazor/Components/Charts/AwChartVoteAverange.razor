@@ -17,26 +17,25 @@
     public List<Movie> Data { get; set; }
     [Parameter]
     public EventCallback Draw { get; set; }
+    [Parameter]
+    public bool ShouldRenderComponent { get; set; }
 
     private Chart<decimal> barChart;
     private Random colorGenerator = new Random();
     private IReadOnlyCollection<string> labels;
     private List<decimal> bars;
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
-        bars = Data.Select(t => t.VoteAverage).ToList();
-    }
+    private bool shouldRenderAfterStart = true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         base.OnAfterRender(firstRender);
         if (!firstRender)
         {
+            labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
+            bars = Data.Select(t => t.VoteAverage).ToList();
             await barChart.Clear();
             await barChart.AddLabelsDatasetsAndUpdate(labels, GetBarChartDataset());
+            shouldRenderAfterStart = false;
         }
     }
 
@@ -76,7 +75,11 @@
 
     private void OnClicked(ChartMouseEventArgs e)
     {
-        var currentElement = Data[e.Index];
-        //navigationManager.NavigateTo()
+        navigationManager.NavigateTo($"movies/popular/details/{Data[e.Index].Id}");
+    }
+
+    protected override bool ShouldRender()
+    {
+        return ShouldRenderComponent || shouldRenderAfterStart;
     }
 }

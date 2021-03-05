@@ -6,6 +6,7 @@
 {
 <DataGrid TItem="Movie" @ref="dataGrid"
           ReadData="ReadData"
+          PageChanged="(e) => PagedMovie.Page = e.Page"
           PageSize="PagedMovie.Results.Count"
           Data="@PagedMovie.Results"
           CurrentPage="@PagedMovie.Page.Value"
@@ -18,7 +19,7 @@
           Striped="true"
           TotalItems="@PagedMovie.TotalResults"
           @bind-SelectedRow="@selectedMovie">
-    <DataGridCommandColumn TItem="Movie" DeleteCommandAllowed="true" CancelCommandAllowed="true" EditCommandAllowed="true" NewCommandAllowed="true" />
+    <DataGridCommandColumn TItem="Movie" />
     <DataGridColumn TItem="Movie" Field="@nameof(Movie.Id)" Caption="#" Sortable="false" />
     <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalTitle)" Caption="Original Title" Editable="true" />
     <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalLanguage)" Caption="@Loc["OriginalLanguage"]" Editable="true" />
@@ -56,7 +57,7 @@
 
     public Movie selectedMovie;
 
-    DataGridEditMode editMode = DataGridEditMode.Form;
+    DataGridEditMode editMode = DataGridEditMode.Popup;
     DataGridSortMode sortMode = DataGridSortMode.Multiple;
 
 

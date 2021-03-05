@@ -39,12 +39,12 @@ namespace AwesomeBlazor.Bootstrap
                         HorizontalHeight = "64px",
                         DarkColors = new ThemeBarColorOptions {
                             BackgroundColor = "#1A1D1A", 
-                            Color = "#FFFFFF", 
-                            BrandColorOptions = new ThemeBarBrandColorOptions { BackgroundColor = "#1A1D1A" }, 
-                            DropdownColorOptions = new ThemeBarDropdownColorOptions { BackgroundColor = "03120E" }, 
+                            Color = "#1A1D1A", 
+                            BrandColorOptions = new ThemeBarBrandColorOptions { BackgroundColor = "#1A1D1A" },
+                            DropdownColorOptions = new ThemeBarDropdownColorOptions { BackgroundColor = "#26413C" },
                             ItemColorOptions = new ThemeBarItemColorOptions { ActiveBackgroundColor = "#26413C", ActiveColor = "#FFFFFF", HoverBackgroundColor = "#3E505B", HoverColor = "#FFFFFF" } } },                   
                     ColorOptions = new ThemeColorOptions { Primary = "#A65529" },
-                    BackgroundOptions = new ThemeBackgroundOptions { Primary = "#0288D1"},
+                    BackgroundOptions = new ThemeBackgroundOptions { Primary = "#1A1D1A", Body = "#26413C" },
                     InputOptions = new ThemeInputOptions { CheckColor = "#0288D1"},
                     SidebarOptions = new ThemeSidebarOptions { BackgroundColor = "#A65529" }                    
                 }

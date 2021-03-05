@@ -16,10 +16,32 @@
           ShowPageSizes="@showPageSizes"
           Filterable="@filterable"
           Sortable="@sortable"
+          Editable="editable"
+          EditMode="editMode"
+          SortMode="sortMode"
           Striped="true"
           TotalItems="@PagedMovie.TotalResults"
           @bind-SelectedRow="@selectedMovie">
-    <DataGridCommandColumn TItem="Movie" />
+    <DataGridCommandColumn TItem="Movie" Width="170px">
+        <NewCommandTemplate>
+            <Button Color="Color.Success" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </NewCommandTemplate>
+        <EditCommandTemplate>
+            <Button Color="Color.Primary" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </EditCommandTemplate>
+        <SaveCommandTemplate>
+            <Button Color="Color.Primary" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </SaveCommandTemplate>
+        <DeleteCommandTemplate>
+            <Button Color="Color.Danger" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </DeleteCommandTemplate>
+        <CancelCommandTemplate>
+            <Button Color="Color.Secondary" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </CancelCommandTemplate>
+        <ClearFilterCommandTemplate>
+            <Button Color="Color.Warning" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </ClearFilterCommandTemplate>
+    </DataGridCommandColumn>
     <DataGridColumn TItem="Movie" Field="@nameof(Movie.Id)" Caption="#" Sortable="false" />
     <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalTitle)" Caption="Original Title" Editable="true" />
     <DataGridColumn TItem="Movie" Field="@nameof(Movie.OriginalLanguage)" Caption="@Loc["OriginalLanguage"]" Editable="true" />
@@ -42,10 +64,6 @@
     <DataGridDateColumn TItem="Movie" Field="@nameof(Movie.ReleaseDate)" Caption="@Loc["ReleaseDate"]" Editable="true" Sortable="true" DisplayFormat="{0:yyyy-MM-dd}" />
     <DataGridNumericColumn TItem="Movie" Field="@nameof(Movie.VoteAverage)" Caption="@Loc["VoteAverage"]" Editable="true" />
 </DataGrid>
-
-    @*Editable="editable"
-        EditMode="editMode"
-        SortMode="sortMode"*@
 }
 
 @code {

@@ -11,7 +11,8 @@
         <AwChartVoteAverange Data="PagedMovies.Results" ShouldRenderComponent="shouldRenderCharts"></AwChartVoteAverange>
     </Column>
     <Column ColumnSize="ColumnSize.IsThird">
-        <AwChartPopularity Data="PagedMovies.Results" ShouldRenderComponent="shouldRenderCharts"></AwChartPopularity>
+        @*<AwChartPopularity Data="PagedMovies.Results" ShouldRenderComponent="shouldRenderCharts"></AwChartPopularity>*@
+        <AwChartPopularityRadar Data="PagedMovies.Results" ShouldRenderComponent="shouldRenderCharts"></AwChartPopularityRadar>
     </Column>
     <Column ColumnSize="ColumnSize.IsThird">
         <AwChartVoteCount Data="PagedMovies.Results"></AwChartVoteCount>

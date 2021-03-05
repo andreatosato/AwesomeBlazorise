@@ -7,7 +7,7 @@
         @Loc["Popularity"]
     </CardHeader>
     <CardBody>
-        <Chart @ref="pieChart" Type="ChartType.Pie" TItem="decimal" Clicked="@OnClicked" />
+        <Chart @ref="radarChart" Type="ChartType.Radar" TItem="decimal" Clicked="@OnClicked" />
     </CardBody>
 </Card>
 
@@ -22,7 +22,7 @@
     [Parameter]
     public bool ShouldRenderComponent { get; set; }
 
-    private Chart<decimal> pieChart;
+    private Chart<decimal> radarChart;
     private Random colorGenerator = new Random();
     private IReadOnlyCollection<string> labels;
     private List<decimal> bars;
@@ -35,17 +35,17 @@
         {
             labels = Data.Select(t => string.IsNullOrEmpty(t.Title) ? t.OriginalTitle : t.Title).ToList();
             bars = Data.Select(t => t.VoteAverage).ToList();
-            await pieChart.Clear();
-            await pieChart.AddLabelsDatasetsAndUpdate(labels, GetPieChartDataset());
+            await radarChart.Clear();
+            await radarChart.AddLabelsDatasetsAndUpdate(labels, GetPieChartDataset());
             shouldRenderAfterStart = false;
         }
     }
 
-    PieChartDataset<decimal> GetPieChartDataset()
+    RadarChartDataset<decimal> GetPieChartDataset()
     {
         var colors = CreateColors();
 
-        return new PieChartDataset<decimal>
+        return new RadarChartDataset<decimal>
         {
             Label = "# of popularity",
             Data = bars,

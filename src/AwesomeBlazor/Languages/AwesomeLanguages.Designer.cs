@@ -70,6 +70,24 @@ namespace AwesomeBlazor.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field must be valid email.
+        /// </summary>
+        internal static string MailErrorMessage {
+            get {
+                return ResourceManager.GetString("MailErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indirizzo mail.
+        /// </summary>
+        internal static string MailField {
+            get {
+                return ResourceManager.GetString("MailField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Original Language.
         /// </summary>
         internal static string OriginalLanguage {
@@ -93,6 +111,15 @@ namespace AwesomeBlazor.Languages {
         internal static string ReleaseDate {
             get {
                 return ResourceManager.GetString("ReleaseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field is required.
+        /// </summary>
+        internal static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
         

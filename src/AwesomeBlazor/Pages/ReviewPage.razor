@@ -1,6 +1,5 @@
 ﻿@page "/movies/review/view"
 @using AwesomeBlazor.Components.Users
-@using AwesomeBlazor.Validators
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Text.Json
 @using AwesomeBlazor.Models.Reviews 
@@ -8,7 +7,7 @@
 <Row>
     <Column ColumnSize="ColumnSize.IsFull">
         <EditForm OnValidSubmit="SubmitAsync" Model="model" EditContext="context">
-            <Validations @ref="validations" Mode="ValidationMode.Auto">
+            <Validations Mode="ValidationMode.Auto" Model="@model" ValidateOnLoad="false" @ref="validator">
                 <Steps SelectedStep="1">
                     <Items>
                         <Step Name="1" Color="Color.Primary">
@@ -34,7 +33,22 @@
                             <AwUserInsert CurrentUser="model.User"></AwUserInsert>
                         </StepPanel>
                         <StepPanel Name="2">
-                            Nothing
+                            <Field Horizontal="true">
+                                <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.Is10">
+                                    <TextEdit @bind-Text="model.User.FirstName" Placeholder="Some text value..." />
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal="true">
+                                <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.Is10">
+                                    <NumericEdit @bind-Value="model.Vote" Placeholder="Some text value..." >
+                                        <Validation>
+                                            <ValidationError/>
+                                        </Validation>
+                                    </NumericEdit>
+                                </FieldBody>
+                            </Field>
                         </StepPanel>
                         <StepPanel Name="3">
                             <Button Type="ButtonType.Submit" Color="Color.Primary" Active="false">Submit</Button>
@@ -57,12 +71,11 @@
     private string SnackBarContent { get; set; }
     public ReviewInsertModel model = new ReviewInsertModel() { User = new Models.Users.UserInsertModel() };
     private EditContext context;
-    private Validations validations;
+    Validations validator;
 
     public void SubmitAsync(EditContext context)
     {
-        var a = validations.ValidateAll();
-        if (context.Validate())
+        if (validator.ValidateAll())
         {
             SnackBarContent = JsonSerializer.Serialize(context.Model, typeof(object), new JsonSerializerOptions { WriteIndented = true });
             snackbar.Show();

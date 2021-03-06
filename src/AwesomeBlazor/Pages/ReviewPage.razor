@@ -1,0 +1,72 @@
+﻿@page "/movies/review/view"
+@using AwesomeBlazor.Components.Users
+@using AwesomeBlazor.Validators.Reviews
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Text.Json
+@using AwesomeBlazor.Models.Reviews 
+
+<Row>
+    <Column ColumnSize="ColumnSize.IsFull">
+        <EditForm OnValidSubmit="SubmitAsync" Model="model" EditContext="context">
+            <Validation HandlerType="typeof(ReviewValidator)" />
+            <Steps SelectedStep="1">
+                <Items>
+                    <Step Name="1" Color="Color.Primary">
+                        <Marker>
+                            <Icon Name="IconName.UserCircle" />
+                        </Marker>
+                        <Caption>
+                            User
+                        </Caption>
+                    </Step>
+                    <Step Name="2" Color="Color.Primary">Vote</Step>
+                    <Step Name="3" Color="Color.Primary">
+                        <Marker>
+                            <Icon Name="IconName.Flag" />
+                        </Marker>
+                        <Caption>
+                            Finish
+                        </Caption>
+                    </Step>
+                </Items>
+                <Content>
+                    <StepPanel Name="1">
+                        <AwUserInsert CurrentUser="model.User"></AwUserInsert>
+                    </StepPanel>
+                    <StepPanel Name="2">
+                        Nothing
+                    </StepPanel>
+                    <StepPanel Name="3">
+                       <Button Type="ButtonType.Submit" Color="Color.Primary" Disabled="context.Validate()" Active="false">Submit</Button>
+                    </StepPanel>
+                </Content>
+              </Steps>
+        </EditForm>
+    </Column>
+</Row>
+
+<Snackbar @ref="snackbar" Multiline="true" Location="SnackbarLocation.None">
+    <SnackbarBody>
+        @SnackBarContent
+    </SnackbarBody>
+</Snackbar>  
+
+@code {
+    private Snackbar snackbar;
+    private string SnackBarContent { get; set; }
+    public ReviewInsertModel model = new ReviewInsertModel() { User = new Models.Users.UserInsertModel() };
+    private EditContext context;
+
+    public void SubmitAsync(EditContext context)
+    {
+        if (context.Validate())
+        {
+            SnackBarContent = JsonSerializer.Serialize(context.Model, typeof(object), new JsonSerializerOptions { WriteIndented = true });
+            snackbar.Show();
+        }
+        else
+        {
+            SnackBarContent = context.GetValidationMessages().Aggregate((t1, t2) => string.Format("{0}, {1}", t1, t2));
+        }
+    }
+}

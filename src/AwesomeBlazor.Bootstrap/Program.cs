@@ -38,13 +38,13 @@ namespace AwesomeBlazor.Bootstrap
                     BarOptions = new ThemeBarOptions {
                         HorizontalHeight = "64px",
                         DarkColors = new ThemeBarColorOptions {
-                            BackgroundColor = "#1A1D1A", 
+                            BackgroundColor = "#3E505B", 
                             Color = "#1A1D1A", 
-                            BrandColorOptions = new ThemeBarBrandColorOptions { BackgroundColor = "#1A1D1A" },
-                            DropdownColorOptions = new ThemeBarDropdownColorOptions { BackgroundColor = "#26413C" },
-                            ItemColorOptions = new ThemeBarItemColorOptions { ActiveBackgroundColor = "#26413C", ActiveColor = "#FFFFFF", HoverBackgroundColor = "#3E505B", HoverColor = "#FFFFFF" } } },                   
+                            BrandColorOptions = new ThemeBarBrandColorOptions { BackgroundColor = "#3E505B" },
+                            DropdownColorOptions = new ThemeBarDropdownColorOptions { BackgroundColor = "#3E505B" },
+                            ItemColorOptions = new ThemeBarItemColorOptions { ActiveBackgroundColor = "#26413C", ActiveColor = "#FFFFFF", HoverBackgroundColor = "#536B79", HoverColor = "#FFFFFF" } } },                   
                     ColorOptions = new ThemeColorOptions { Primary = "#A65529" },
-                    BackgroundOptions = new ThemeBackgroundOptions { Primary = "#1A1D1A", Body = "#26413C" },
+                    BackgroundOptions = new ThemeBackgroundOptions { Primary = "#3E505B", Body = "#26413C" },
                     InputOptions = new ThemeInputOptions { CheckColor = "#0288D1"},
                     SidebarOptions = new ThemeSidebarOptions { BackgroundColor = "#A65529" }                    
                 }
@@ -60,7 +60,7 @@ namespace AwesomeBlazor.Bootstrap
             builder.RootComponents.Add<App>("#app");
 
             var host = builder.Build();
-            await SetBrowserCulture(host);
+            await SetBrowserCulture(host).ConfigureAwait(false);
 
             await host.RunAsync();
         }

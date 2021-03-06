@@ -1,0 +1,13 @@
+﻿@using AwesomeBlazor.Models.Users
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is2">Birthday</FieldLabel>
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <DateEdit TValue="DateTime?" @bind-Date="CurrentUser.BirthDate" Placeholder="Enter birthday"/>
+    </FieldBody>
+</Field>
+
+@code {
+    [Parameter]
+    public UserInsertModel CurrentUser { get; set; } = new UserInsertModel();
+}

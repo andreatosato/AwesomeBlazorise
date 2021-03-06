@@ -2,13 +2,14 @@
 @using AwesomeBlazor.Components.Users
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Text.Json
-@using AwesomeBlazor.Models.Reviews 
+@using AwesomeBlazor.Models.Reviews
 
 <Row>
     <Column ColumnSize="ColumnSize.IsFull">
-        <EditForm OnValidSubmit="SubmitAsync" Model="model" EditContext="context">
-            <Validations Mode="ValidationMode.Auto" Model="@model" ValidateOnLoad="false" @ref="validator">
-                <Steps SelectedStep="1">
+        <EditForm OnSubmit="SubmitAsync" Model="model" EditContext="context">
+            <DataAnnotationsValidator />
+            <Validations Mode="ValidationMode.Auto" Model="@model" ValidateOnLoad="true" @ref="validations">
+                <Steps SelectedStep="1" SelectedStepChanged="(s) => ShouldRenderFromParent = false">
                     <Items>
                         <Step Name="1" Color="Color.Primary">
                             <Marker>
@@ -30,28 +31,22 @@
                     </Items>
                     <Content>
                         <StepPanel Name="1">
-                            <AwUserInsert CurrentUser="model.User"></AwUserInsert>
+                            <AwUserInsert CurrentUser="model.User" ShouldRenderFromParent="ShouldRenderFromParent"></AwUserInsert>
                         </StepPanel>
                         <StepPanel Name="2">
-                            <Field Horizontal="true">
-                                <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
-                                <FieldBody ColumnSize="ColumnSize.Is10">
-                                    <TextEdit @bind-Text="model.User.FirstName" Placeholder="Some text value..." />
-                                </FieldBody>
-                            </Field>
-                            <Field Horizontal="true">
-                                <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
-                                <FieldBody ColumnSize="ColumnSize.Is10">
-                                    <NumericEdit @bind-Value="model.Vote" Placeholder="Some text value..." >
-                                        <Validation>
-                                            <ValidationError/>
-                                        </Validation>
-                                    </NumericEdit>
-                                </FieldBody>
-                            </Field>
+                            <Validation>
+                                <Field Horizontal="true">
+                                    <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                                    <FieldBody ColumnSize="ColumnSize.Is10">
+                                        <NumericEdit @bind-Value="@model.Vote" Placeholder="Some text value...">
+                                            <ValidationError />
+                                        </NumericEdit>
+                                    </FieldBody>
+                                </Field>
+                            </Validation>
                         </StepPanel>
                         <StepPanel Name="3">
-                            <Button Type="ButtonType.Submit" Color="Color.Primary" Active="false">Submit</Button>
+                            <Button Type="ButtonType.Submit" Color="Color.Primary">Submit</Button>
                         </StepPanel>
                     </Content>
                 </Steps>
@@ -64,25 +59,33 @@
     <SnackbarBody>
         @SnackBarContent
     </SnackbarBody>
-</Snackbar>  
+</Snackbar>
 
 @code {
     private Snackbar snackbar;
     private string SnackBarContent { get; set; }
     public ReviewInsertModel model = new ReviewInsertModel() { User = new Models.Users.UserInsertModel() };
     private EditContext context;
-    Validations validator;
+    private bool isValid;
+    Validations validations;
+    bool ShouldRenderFromParent;
 
     public void SubmitAsync(EditContext context)
     {
-        if (validator.ValidateAll())
+        if (validations.ValidateAll())
         {
-            SnackBarContent = JsonSerializer.Serialize(context.Model, typeof(object), new JsonSerializerOptions { WriteIndented = true });
+            SnackBarContent += JsonSerializer.Serialize(context.Model, typeof(object), new JsonSerializerOptions { WriteIndented = true });
             snackbar.Show();
         }
         else
         {
-            SnackBarContent = context.GetValidationMessages().Aggregate((t1, t2) => string.Format("{0}, {1}", t1, t2));
+            foreach (var item in context.GetValidationMessages())
+            {
+                SnackBarContent += item;
+            }
+            ShouldRenderFromParent = true;
         }
     }
+
+
 }

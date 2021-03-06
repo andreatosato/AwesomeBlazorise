@@ -1,20 +1,53 @@
 ﻿@using AwesomeBlazor.Models.Users
 
-<Field Horizontal="true">
-    <FieldLabel ColumnSize="ColumnSize.Is2">Birthday</FieldLabel>
-    <FieldBody ColumnSize="ColumnSize.Is10">
-        <DateEdit TValue="DateTime?" @bind-Date="CurrentUser.BirthDate" Placeholder="Enter birthday" >
-            <Feedback>
+<Validation>
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <TextEdit @bind-Text="@CurrentUser.FirstName" Placeholder="Some text value...">
                 <ValidationError />
-                @*<ValidationNone>Please enter the email.</ValidationNone>
-                <ValidationSuccess>Email is good.</ValidationSuccess>
-                <ValidationError>Enter valid email!</ValidationError>*@
-            </Feedback>
-        </DateEdit>
-    </FieldBody>
-</Field>
+            </TextEdit>
+        </FieldBody>
+    </Field>
+</Validation>
+<Validation>
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <TextEdit @bind-Text="@CurrentUser.LastName" Placeholder="Some text value...">
+                <ValidationError />
+            </TextEdit>
+        </FieldBody>
+    </Field>
+</Validation>
+<Validation>
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">Birthday</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <DateEdit TValue="DateTime?" @bind-Date="@CurrentUser.BirthDate" Placeholder="Enter birthday">
+                <Feedback>
+                    <ValidationError />
+                    @*<ValidationNone>Please enter the email.</ValidationNone>
+                        <ValidationSuccess>Email is good.</ValidationSuccess>
+                        <ValidationError>Enter valid email!</ValidationError>*@
+                </Feedback>
+            </DateEdit>
+        </FieldBody>
+    </Field>
+</Validation>
 
 @code {
     [Parameter]
     public UserInsertModel CurrentUser { get; set; } = new UserInsertModel();
+
+    [Parameter]
+    public bool ShouldRenderFromParent { get; set; }
+
+    protected override bool ShouldRender()
+    {
+        return base.ShouldRender();
+        //var result = base.ShouldRender() && ShouldRenderFromParent;
+        //ShouldRenderFromParent = true;
+        //return result;
+    }
 }

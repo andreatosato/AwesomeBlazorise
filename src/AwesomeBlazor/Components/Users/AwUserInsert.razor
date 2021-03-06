@@ -1,9 +1,18 @@
 ﻿@using AwesomeBlazor.Models.Users
+@using AwesomeBlazor.Validators
 
 <Field Horizontal="true">
     <FieldLabel ColumnSize="ColumnSize.Is2">Birthday</FieldLabel>
     <FieldBody ColumnSize="ColumnSize.Is10">
-        <DateEdit TValue="DateTime?" @bind-Date="CurrentUser.BirthDate" Placeholder="Enter birthday"/>
+        <Validation HandlerType="typeof(FluentValidationHandler)" >
+            <DateEdit TValue="DateTime?" @bind-Date="CurrentUser.BirthDate" Placeholder="Enter birthday" >
+                <Feedback>
+                    <ValidationNone>Please enter the email.</ValidationNone>
+                    <ValidationSuccess>Email is good.</ValidationSuccess>
+                    <ValidationError>Enter valid email!</ValidationError>
+                </Feedback>
+            </DateEdit>
+        </Validation>
     </FieldBody>
 </Field>
 

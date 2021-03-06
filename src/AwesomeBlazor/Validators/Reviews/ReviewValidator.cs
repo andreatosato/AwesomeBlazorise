@@ -5,16 +5,6 @@ using FluentValidation;
 
 namespace AwesomeBlazor.Validators.Reviews
 {
-
-    //public class FluentValidationHandler : Blazorise.IValidationHandler
-    //{
-    //    public void Validate(IValidation validation, object newValidationValue)
-    //    {
-    //        validation.
-    //    }
-    //}
-
-
     public class ReviewValidator : AbstractValidator<ReviewInsertModel>
     {
         public ReviewValidator()

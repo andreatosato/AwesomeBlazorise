@@ -22,7 +22,7 @@ namespace AwesomeBlazor.Languages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AwesomeLanguages {
+    public class AwesomeLanguages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AwesomeBlazor.Languages {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AwesomeBlazor.Languages.AwesomeLanguages", typeof(AwesomeLanguages).Assembly);
@@ -51,7 +51,7 @@ namespace AwesomeBlazor.Languages {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,18 @@ namespace AwesomeBlazor.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm value.
+        /// </summary>
+        public static string ConfirmValue {
+            get {
+                return ResourceManager.GetString("ConfirmValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gendres.
         /// </summary>
-        internal static string Gendres {
+        public static string Gendres {
             get {
                 return ResourceManager.GetString("Gendres", resourceCulture);
             }
@@ -72,7 +81,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Field must be valid email.
         /// </summary>
-        internal static string MailErrorMessage {
+        public static string MailErrorMessage {
             get {
                 return ResourceManager.GetString("MailErrorMessage", resourceCulture);
             }
@@ -81,7 +90,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Indirizzo mail.
         /// </summary>
-        internal static string MailField {
+        public static string MailField {
             get {
                 return ResourceManager.GetString("MailField", resourceCulture);
             }
@@ -90,7 +99,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Original Language.
         /// </summary>
-        internal static string OriginalLanguage {
+        public static string OriginalLanguage {
             get {
                 return ResourceManager.GetString("OriginalLanguage", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Popularity.
         /// </summary>
-        internal static string Popularity {
+        public static string Popularity {
             get {
                 return ResourceManager.GetString("Popularity", resourceCulture);
             }
@@ -108,7 +117,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Release Date.
         /// </summary>
-        internal static string ReleaseDate {
+        public static string ReleaseDate {
             get {
                 return ResourceManager.GetString("ReleaseDate", resourceCulture);
             }
@@ -117,7 +126,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Field is required.
         /// </summary>
-        internal static string Required {
+        public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
             }
@@ -126,7 +135,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
-        internal static string Title {
+        public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
@@ -135,7 +144,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Vote Averange.
         /// </summary>
-        internal static string VoteAverange {
+        public static string VoteAverange {
             get {
                 return ResourceManager.GetString("VoteAverange", resourceCulture);
             }
@@ -144,7 +153,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Vote Count.
         /// </summary>
-        internal static string VoteCount {
+        public static string VoteCount {
             get {
                 return ResourceManager.GetString("VoteCount", resourceCulture);
             }
@@ -153,7 +162,7 @@ namespace AwesomeBlazor.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Votes.
         /// </summary>
-        internal static string Votes {
+        public static string Votes {
             get {
                 return ResourceManager.GetString("Votes", resourceCulture);
             }

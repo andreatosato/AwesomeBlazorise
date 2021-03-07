@@ -14,8 +14,8 @@ namespace AwesomeBlazor.Models.Users
         [Required]
         public DateTime? BirthDate { get; set; }
 
-        [Required(ErrorMessage = "Required", ErrorMessageResourceType = typeof(Languages.AwesomeLanguages))]
-        [EmailAddress(ErrorMessage = "MailErrorMessage", ErrorMessageResourceType = typeof(Languages.AwesomeLanguages))]
+        [Required(ErrorMessageResourceType = typeof(Languages.AwesomeLanguages), ErrorMessageResourceName = "Required")]
+        [EmailAddress(ErrorMessageResourceType = typeof(Languages.AwesomeLanguages), ErrorMessageResourceName = "MailErrorMessage")]
         [Display(Name = "MailField", ResourceType = typeof(Languages.AwesomeLanguages))]
         public string Email { get; set; }
     }

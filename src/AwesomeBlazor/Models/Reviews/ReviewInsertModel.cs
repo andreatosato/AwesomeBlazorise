@@ -11,5 +11,9 @@ namespace AwesomeBlazor.Models.Reviews
         [Required]
         [Range(0, 5)]
         public int Vote { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Languages.AwesomeLanguages), ErrorMessageResourceName = "Required")]
+        [Display(Name = "ConfirmValue", ResourceType = typeof(Languages.AwesomeLanguages))]
+        public bool ConfirmValue { get; set; }
     }
 }

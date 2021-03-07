@@ -9,47 +9,32 @@
         <EditForm OnSubmit="SubmitAsync" Model="model" EditContext="context">
             <DataAnnotationsValidator />
             <Validations Mode="ValidationMode.Auto" Model="@model" ValidateOnLoad="true" @ref="validations">
-                <Steps SelectedStep="1" SelectedStepChanged="(s) => ShouldRenderFromParent = false">
-                    <Items>
-                        <Step Name="1" Color="Color.Primary">
-                            <Marker>
-                                <Icon Name="IconName.UserCircle" />
-                            </Marker>
-                            <Caption>
-                                User
-                            </Caption>
-                        </Step>
-                        <Step Name="2" Color="Color.Primary">Vote</Step>
-                        <Step Name="3" Color="Color.Primary">
-                            <Marker>
-                                <Icon Name="IconName.Flag" />
-                            </Marker>
-                            <Caption>
-                                Finish
-                            </Caption>
-                        </Step>
-                    </Items>
-                    <Content>
-                        <StepPanel Name="1">
-                            <AwUserInsert CurrentUser="model.User" ShouldRenderFromParent="ShouldRenderFromParent"></AwUserInsert>
-                        </StepPanel>
-                        <StepPanel Name="2">
-                            <Validation>
-                                <Field Horizontal="true">
-                                    <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
-                                    <FieldBody ColumnSize="ColumnSize.Is10">
-                                        <NumericEdit @bind-Value="@model.Vote" Placeholder="Some text value...">
-                                            <ValidationError />
-                                        </NumericEdit>
-                                    </FieldBody>
-                                </Field>
-                            </Validation>
-                        </StepPanel>
-                        <StepPanel Name="3">
-                            <Button Type="ButtonType.Submit" Color="Color.Primary">Submit</Button>
-                        </StepPanel>
-                    </Content>
-                </Steps>
+                <AwUserInsert CurrentUser="model.User"></AwUserInsert>
+
+                <Validation>
+                    <Field Horizontal="true">
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <Slider TValue="int" Min="0" Max="5" Step="1" @bind-Value="@model.Vote">
+                                <ValidationError />
+                            </Slider>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+
+                <Validation>
+                    <Field Horizontal="true">
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <Switch TValue="bool" @bind-Checked="@model.ConfirmValue">
+                                <ValidationError />
+                            </Switch>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+
+                <Button Type="ButtonType.Submit" Color="Color.Primary">Submit</Button>
+
             </Validations>
         </EditForm>
     </Column>
@@ -68,7 +53,7 @@
     private EditContext context;
     private bool isValid;
     Validations validations;
-    bool ShouldRenderFromParent;
+    Steps steps;
 
     public void SubmitAsync(EditContext context)
     {
@@ -83,7 +68,7 @@
             {
                 SnackBarContent += item;
             }
-            ShouldRenderFromParent = true;
+            snackbar.Show();
         }
     }
 

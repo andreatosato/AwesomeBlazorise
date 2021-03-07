@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\StepsPage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.3" />
 	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.3" PrivateAssets="all" />
     <PackageReference Include="Blazorise" Version="0.9.3" />
@@ -36,10 +40,10 @@
   <ItemGroup>
     <EmbeddedResource Update="Languages\AwesomeLanguages.it.resx">
       <LastGenOutput>AwesomeLanguages.it.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Languages\AwesomeLanguages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AwesomeLanguages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -47,5 +51,17 @@
 	<PropertyGroup>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\StepsPage.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Pages\StepsPage.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Pages\StepsPage.razor" />
+	</ItemGroup>
 	
 </Project>

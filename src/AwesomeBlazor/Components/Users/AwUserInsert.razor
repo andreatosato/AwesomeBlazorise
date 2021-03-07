@@ -2,9 +2,9 @@
 
 <Validation>
     <Field Horizontal="true">
-        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+        <FieldLabel ColumnSize="ColumnSize.Is2">First Name</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10">
-            <TextEdit @bind-Text="@CurrentUser.FirstName" Placeholder="Some text value...">
+            <TextEdit @bind-Text="@CurrentUser.FirstName" Placeholder="First name">
                 <ValidationError />
             </TextEdit>
         </FieldBody>
@@ -12,9 +12,20 @@
 </Validation>
 <Validation>
     <Field Horizontal="true">
-        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Last Name</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10">
-            <TextEdit @bind-Text="@CurrentUser.LastName" Placeholder="Some text value...">
+            <TextEdit @bind-Text="@CurrentUser.LastName" Placeholder="Last name">
+                <ValidationError />
+            </TextEdit>
+        </FieldBody>
+    </Field>
+</Validation>
+<Validation>
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">Email</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <TextEdit @bind-Text="@CurrentUser.Email" Placeholder="Email" EditMask="@("@")" MaskType="MaskType.RegEx">
+                <FieldHelp>Please enter a valid email address</FieldHelp>
                 <ValidationError />
             </TextEdit>
         </FieldBody>
@@ -40,14 +51,4 @@
     [Parameter]
     public UserInsertModel CurrentUser { get; set; } = new UserInsertModel();
 
-    [Parameter]
-    public bool ShouldRenderFromParent { get; set; }
-
-    protected override bool ShouldRender()
-    {
-        return base.ShouldRender();
-        //var result = base.ShouldRender() && ShouldRenderFromParent;
-        //ShouldRenderFromParent = true;
-        //return result;
-    }
 }

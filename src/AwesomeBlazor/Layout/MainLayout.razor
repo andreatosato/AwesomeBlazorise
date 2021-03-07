@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager navigation 
 
 <Layout Sider="true">
     <LayoutSider>
@@ -46,6 +47,17 @@
                                 <BarDropdownMenu>
                                     <BarDropdownItem To="/movies/review/view">
                                         Review
+                                    </BarDropdownItem>
+                                </BarDropdownMenu>
+                            </BarDropdown>
+                            <BarDropdown>
+                                <BarDropdownToggle>
+                                    <BarIcon IconName="IconName.School" />
+                                    Samples
+                                </BarDropdownToggle>
+                                <BarDropdownMenu>
+                                    <BarDropdownItem To="/movies/steps">
+                                        Steps
                                     </BarDropdownItem>
                                 </BarDropdownMenu>
                             </BarDropdown>
@@ -143,8 +155,36 @@
                 </BarMenu>
             </Bar>
         </LayoutHeader>
-        <LayoutContent Padding="Padding.Is4.OnX">
-            @Body
+        <LayoutContent> 
+            <Breadcrumb Mode="BreadcrumbMode.Auto">
+                <BreadcrumbItem>
+                    <BreadcrumbLink To="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                @if (navigation.Uri.Contains("popular", StringComparison.OrdinalIgnoreCase) || navigation.Uri.Contains("grid", StringComparison.OrdinalIgnoreCase))
+                {
+                    <BreadcrumbItem>
+                        <BreadcrumbLink To="/movies/popular/view">Popular</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink To="/movies/grid/view">Grid</BreadcrumbLink>
+                    </BreadcrumbItem>
+                }
+                @if (navigation.Uri.Contains("review", StringComparison.OrdinalIgnoreCase))
+                {
+                    <BreadcrumbItem>
+                        <BreadcrumbLink To="/movies/review/view">Review</BreadcrumbLink>
+                    </BreadcrumbItem>
+                }
+                @if (navigation.Uri.Contains("steps", StringComparison.OrdinalIgnoreCase))
+                {
+                    <BreadcrumbItem>
+                        <BreadcrumbLink To="/movies/steps">Steps</BreadcrumbLink>
+                    </BreadcrumbItem>
+                }
+            </Breadcrumb>
+            <Container Fluid="true">
+                @Body
+            </Container>
         </LayoutContent>
     </Layout>
 </Layout>

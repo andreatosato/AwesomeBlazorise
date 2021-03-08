@@ -1,0 +1,15 @@
+﻿@inherits BaseComponent
+
+@if (ReadOnly)
+{
+    <span style="@Style">
+        <Icon Icon="@Name" Size="@Size"></Icon>
+    </span>
+}
+else
+{
+    <span style="@Style" @onmouseover="HandleMouseOver" @onclick="HandleClick" @onmouseout="HandleMouseOut ">
+        <input class="mud-rating-input" type="radio" value="@ItemValue" name="@Rating?.Name" disabled="@Disabled" checked="@(IsChecked)" />
+        <Icon Name="@Name" Size="@Size"></Icon>
+    </span>
+}

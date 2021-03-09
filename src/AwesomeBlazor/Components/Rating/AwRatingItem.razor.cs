@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Blazorise.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace AwesomeBlazor.Components.Rating
         [CascadingParameter]
         private AwRating Rating { get; set; }
 
+        [Inject] public IClassProvider classProvider { get; set; }
+
         [Parameter] public int ItemValue { get; set; }
 
         internal string Name { get; set; }
@@ -17,7 +20,6 @@ namespace AwesomeBlazor.Components.Rating
         internal bool IsActive { get; set; }
 
         private bool IsChecked => ItemValue == Rating?.SelectedValue;
-
 
         /// <summary>
         /// The Size of the icon.
@@ -39,6 +41,8 @@ namespace AwesomeBlazor.Components.Rating
         /// </summary>
         [Parameter] public bool ReadOnly { get; set; }
 
+        [Parameter] public IconStyle IconStyle { get; set; }
+
         /// <summary>
         /// Fires when element clicked.
         /// </summary>
@@ -49,38 +53,46 @@ namespace AwesomeBlazor.Components.Rating
         /// </summary>
         [Parameter] public EventCallback<int?> ItemHovered { get; set; }
 
+        protected override void BuildClasses(ClassBuilder builder)
+        {
+            builder.Append($"color: {classProvider.ToColor(Color)}");
+            base.BuildClasses(builder);
+        }
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            Name = SelectIcon();
+            var select = SelectIcon();
+            Name = select.Name;
+            IconStyle = select.IconStyle;
         }
 
-        private string SelectIcon()
+        private (string Name, IconStyle  IconStyle) SelectIcon()
         {
             if (Rating == null)
-                return null;
+                return (null, IconStyle.Regular);
             if (Rating.HoveredValue.HasValue && Rating.HoveredValue.Value >= ItemValue)
             {
                 // full icon when @RatingItem hovered
-                return Rating.FullIcon;
+                return (Rating.FullIcon, IconStyle.Solid);
             }
             else if (Rating.SelectedValue >= ItemValue)
             {
                 if (Rating.HoveredValue.HasValue && Rating.HoveredValue.Value < ItemValue)
                 {
                     // empty icon when equal or higher RatingItem value clicked, but less value hovered 
-                    return Rating.EmptyIcon;
+                    return (Rating.EmptyIcon, IconStyle.Regular);
                 }
                 else
                 {
                     // full icon when equal or higher RatingItem value clicked
-                    return Rating.FullIcon;
+                    return (Rating.FullIcon, IconStyle.Solid);
                 }
             }
             else
             {
                 // empty icon when this or higher RatingItem is not clicked and not hovered
-                return Rating.EmptyIcon;
+                return (Rating.EmptyIcon, IconStyle.Regular);
             }
         }
 

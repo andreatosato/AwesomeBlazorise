@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Blazorise.Providers;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,15 @@ namespace AwesomeBlazor.Components.Rating
 {
     public partial class AwRating : BaseComponent
     {
+        [Inject] IIconProvider IconProvider { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitializedAsync();
+            FullIcon = IconProvider.GetIconName(IconName.Star);
+            EmptyIcon = IconProvider.GetIconName(IconName.Star);
+        }
+
         /// <summary>
         /// User class names for RatingItems, separated by space
         /// </summary>
@@ -33,12 +43,12 @@ namespace AwesomeBlazor.Components.Rating
         /// <summary>
         /// Selected or hovered icon. Default @Icons.Material.Star
         /// </summary>
-        [Parameter] public string FullIcon { get; set; } = nameof(IconName.Star);
+        [Parameter] public string FullIcon { get; set; }
 
         /// <summary>
         /// Non selected item icon. Default @Icons.Material.StarBorder
         /// </summary>
-        [Parameter] public string EmptyIcon { get; set; } = nameof(IconName.StarHalf);
+        [Parameter] public string EmptyIcon { get; set; }
 
         /// <summary>
         /// The color of the component. It supports the theme colors.

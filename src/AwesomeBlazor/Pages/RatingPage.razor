@@ -2,8 +2,11 @@
 @using AwesomeBlazor.Components.Rating
 <h3>RatingPage</h3>
 
-<AwRating SelectedValue="2" MaxValue="10"></AwRating>
+<AwRating SelectedValue="@SelectedValue" SelectedValueChanged="@((i) => SelectedValue = i)" MaxValue="10" Color="Color.Primary"></AwRating>
+
+<br />
+- @SelectedValue -
 
 @code {
-
+    public int SelectedValue { get; set; } = 2;
 }

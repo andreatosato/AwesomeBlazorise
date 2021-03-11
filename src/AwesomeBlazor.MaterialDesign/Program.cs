@@ -55,10 +55,6 @@ namespace AwesomeBlazor.MaterialDesign
             var host = builder.Build();
             await SetBrowserCulture(host);
 
-            host.Services
-                .UseMaterialProviders()
-                .UseMaterialIcons();
-
             await host.RunAsync();
         }
 

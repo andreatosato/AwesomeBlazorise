@@ -16,8 +16,12 @@ namespace AwesomeBlazor.Components.Rating
         protected override void OnInitialized()
         {
             base.OnInitializedAsync();
-            FullIcon = IconProvider.GetIconName(IconName.Star);
-            EmptyIcon = IconProvider.GetIconName(IconName.Star);
+            if (FullIconStyle == null)
+                FullIconStyle = IconStyle.Solid;
+            if (EmptyIconStyle == null)
+                EmptyIconStyle = IconStyle.Regular;
+            FullIconName = string.IsNullOrEmpty(FullIcon) ? IconProvider.GetIconName(IconName.Star) : FullIcon;
+            EmptyIconName = string.IsNullOrEmpty(EmptyIcon) ? IconProvider.GetIconName(IconName.Star) : EmptyIcon;
         }
 
         /// <summary>
@@ -30,51 +34,32 @@ namespace AwesomeBlazor.Components.Rating
         /// </summary>
         [Parameter] public string RatingItemsStyle { get; set; }
 
-        /// <summary>
-        /// Input name. If not initialized, name will be random guid.
-        /// </summary>
         [Parameter] public string Name { get; set; } = Guid.NewGuid().ToString();
 
-        /// <summary>
-        /// Max value and how many elements to click will be generated. Default: 5
-        /// </summary>
         [Parameter] public int MaxValue { get; set; } = 5;
 
-        /// <summary>
-        /// Selected or hovered icon. Default @Icons.Material.Star
-        /// </summary>
         [Parameter] public string FullIcon { get; set; }
+        public string FullIconName { get; set; }
 
-        /// <summary>
-        /// Non selected item icon. Default @Icons.Material.StarBorder
-        /// </summary>
         [Parameter] public string EmptyIcon { get; set; }
+        public string EmptyIconName { get; set; }
+
+        [Parameter] public IconStyle? FullIconStyle { get; set; }
+        
+        [Parameter] public IconStyle? EmptyIconStyle { get; set; }
 
         /// <summary>
-        /// The color of the component. It supports the theme colors.
+        /// Not work now
         /// </summary>
         [Parameter] public Color Color { get; set; } = Color.Primary;
         /// <summary>
-        /// The Size of the icons.
+        /// Not work now
         /// </summary>
         [Parameter] public Size Size { get; set; } = Size.Medium;
-        /// <summary>
-        /// If true, the controls will be disabled.
-        /// </summary>
         [Parameter] public bool Disabled { get; set; }
-        /// <summary>
-        /// If true, the ratings will show without interactions.
-        /// </summary>
         [Parameter] public bool ReadOnly { get; set; }
-
-        /// <summary>
-        /// Fires when SelectedValue changes.
-        /// </summary>
         [Parameter] public EventCallback<int> SelectedValueChanged { get; set; }
 
-        /// <summary>
-        /// Selected value. This property is two-way bindable.
-        /// </summary>
         [Parameter]
         public int SelectedValue
         {
@@ -92,9 +77,6 @@ namespace AwesomeBlazor.Components.Rating
 
         private int _selectedValue = 0;
 
-        /// <summary>
-        /// Fires when hovered value change. Value will be null if no rating item is hovered.
-        /// </summary>
         [Parameter] public EventCallback<int?> HoveredValueChanged { get; set; }
 
         internal int? HoveredValue
@@ -102,7 +84,7 @@ namespace AwesomeBlazor.Components.Rating
             get => _hoveredValue;
             set
             {
-                if (_hoveredValue == value)
+                if (value == null || _hoveredValue == value)
                     return;
 
                 _hoveredValue = value;

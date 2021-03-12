@@ -70,29 +70,29 @@ namespace AwesomeBlazor.Components.Rating
         private (string Name, IconStyle  IconStyle) SelectIcon()
         {
             if (Rating == null)
-                return (null, IconStyle.Regular);
+                return (null, IconStyle.Solid);
             if (Rating.HoveredValue.HasValue && Rating.HoveredValue.Value >= ItemValue)
             {
                 // full icon when @RatingItem hovered
-                return (Rating.FullIcon, IconStyle.Solid);
+                return (Rating.FullIconName, Rating.FullIconStyle.Value);
             }
             else if (Rating.SelectedValue >= ItemValue)
             {
                 if (Rating.HoveredValue.HasValue && Rating.HoveredValue.Value < ItemValue)
                 {
                     // empty icon when equal or higher RatingItem value clicked, but less value hovered 
-                    return (Rating.EmptyIcon, IconStyle.Regular);
+                    return (Rating.EmptyIconName, Rating.EmptyIconStyle.Value);
                 }
                 else
                 {
                     // full icon when equal or higher RatingItem value clicked
-                    return (Rating.FullIcon, IconStyle.Solid);
+                    return (Rating.FullIconName, Rating.FullIconStyle.Value);
                 }
             }
             else
             {
                 // empty icon when this or higher RatingItem is not clicked and not hovered
-                return (Rating.EmptyIcon, IconStyle.Regular);
+                return (Rating.EmptyIconName, Rating.EmptyIconStyle.Value);
             }
         }
 

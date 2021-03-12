@@ -2,11 +2,29 @@
 @using AwesomeBlazor.Components.Rating
 <h3>RatingPage</h3>
 
-<AwRating SelectedValue="@SelectedValue" SelectedValueChanged="@((i) => SelectedValue = i)" MaxValue="10" Color="Color.Primary"></AwRating>
+
+<AwRating SelectedValue="@SelectedValue"
+          SelectedValueChanged="@((i) => SelectedValue = i)"
+          MaxValue="10">
+</AwRating>
 
 <br />
 - @SelectedValue -
 
+
+<Heading Size="HeadingSize.Is5">Material icons</Heading>
+<AwRating SelectedValue="@SelectedMaterialValue"
+          SelectedValueChanged="@((i) => SelectedMaterialValue = i)"
+          FullIcon="@("star")"
+          EmptyIcon="@("star_outline")"
+          FullIconStyle="@(IconStyle.Solid)"
+          EmptyIconStyle="@(IconStyle.Solid)">
+</AwRating>
+
+<br />
+- @SelectedMaterialValue -
+
 @code {
     public int SelectedValue { get; set; } = 2;
+    public int SelectedMaterialValue { get; set; } = 2;
 }

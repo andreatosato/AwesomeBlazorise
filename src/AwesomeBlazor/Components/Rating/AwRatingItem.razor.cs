@@ -22,35 +22,23 @@ namespace AwesomeBlazor.Components.Rating
         private bool IsChecked => ItemValue == Rating?.SelectedValue;
 
         /// <summary>
-        /// The Size of the icon.
+        /// Not work now
         /// </summary>
         [Parameter] public Size Size { get; set; } = Size.Medium;
 
         /// <summary>
-        /// The color of the component. It supports the theme colors.
+        /// Not work
         /// </summary>
         [Parameter] public Color Color { get; set; } = Color.Primary;
 
-        /// <summary>
-        /// If true, the controls will be disabled.
-        /// </summary>
         [Parameter] public bool Disabled { get; set; }
 
-        /// <summary>
-        /// If true, the item will be readonly.
-        /// </summary>
         [Parameter] public bool ReadOnly { get; set; }
 
         [Parameter] public IconStyle IconStyle { get; set; }
 
-        /// <summary>
-        /// Fires when element clicked.
-        /// </summary>
         [Parameter] public EventCallback<int> ItemClicked { get; set; }
 
-        /// <summary>
-        /// Fires when element hovered.
-        /// </summary>
         [Parameter] public EventCallback<int?> ItemHovered { get; set; }
 
         protected override void BuildClasses(ClassBuilder builder)

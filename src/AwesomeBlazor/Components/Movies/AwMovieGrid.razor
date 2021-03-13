@@ -4,7 +4,7 @@
 
 @if (PagedMovie.Results.Count > 0)
 {
-<DataGrid TItem="Movie" @ref="dataGrid"
+<DataGrid TItem="Movie" @ref="DataGrid"
           ReadData="ReadData"
           PageChanged="(e) => PagedMovie.Page = e.Page"
           PageSize="PagedMovie.Results.Count"
@@ -66,7 +66,8 @@
 </DataGrid>
 }
 
-@code {
+@code { 
+
     [Parameter]
     public PagedResult<Movie> PagedMovie { get; set; } = new PagedResult<Movie>();
 
@@ -78,8 +79,8 @@
     DataGridEditMode editMode = DataGridEditMode.Popup;
     DataGridSortMode sortMode = DataGridSortMode.Multiple;
 
-
-    DataGrid<Movie> dataGrid;
+    [Parameter]
+    public DataGrid<Movie> DataGrid { get; set; }
     bool editable = true;
     bool sortable = true;
     bool filterable = true;

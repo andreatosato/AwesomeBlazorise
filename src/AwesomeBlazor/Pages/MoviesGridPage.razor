@@ -1,13 +1,15 @@
 ﻿@page "/movies/grid/view"
 @inject NavigationManager navigationManager
 @inject Services.Abstractions.ITMDbService TMDb
+@inject IJSRuntime jSRuntime
 @using AwesomeBlazor.Components.Movies
 @using System.Threading 
 
 <h3>Movies Grid</h3>
-<AwMovieGrid  PagedMovie="PagedMovies" ReadData="async (e) => await ReadDataAsync(e)"></AwMovieGrid>
+<AwMovieGrid @ref="movieGrid" PagedMovie="PagedMovies" ReadData="async (e) => await ReadDataAsync(e)"></AwMovieGrid>
 
 @code {
+    public AwMovieGrid movieGrid;
 
     public PagedResult<Movie> PagedMovies { get; set; } = new PagedResult<Movie>();
 
@@ -19,6 +21,7 @@
     private async Task ReadDataAsync(DataGridReadDataEventArgs<Movie> e)
     {
         await LoadMoviesAsync(e.Page, e.CancellationToken);
+        await jSRuntime.InvokeVoidAsync("blazorHelpers.scrollToFragment", movieGrid.DataGrid.ElementId);
         StateHasChanged();
     }
 

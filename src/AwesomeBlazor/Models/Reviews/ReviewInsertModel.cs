@@ -6,7 +6,7 @@ namespace AwesomeBlazor.Models.Reviews
     public class ReviewInsertModel
     {
         [Required]
-        public UserInsertModel User { get; set; }
+        public UserInsertModel User { get; set; } = new UserInsertModel();
 
         [Required]
         [Range(0, 5)]

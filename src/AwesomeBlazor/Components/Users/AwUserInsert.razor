@@ -24,7 +24,7 @@
     <Field Horizontal="true">
         <FieldLabel ColumnSize="ColumnSize.Is2">Email</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10">
-            <TextEdit @bind-Text="@CurrentUser.Email" Placeholder="Email" EditMask="@("@")" MaskType="MaskType.RegEx">
+            <TextEdit @bind-Text="@CurrentUser.Email" Placeholder="Email">
                 <FieldHelp>Please enter a valid email address</FieldHelp>
                 <ValidationError />
             </TextEdit>
@@ -48,7 +48,16 @@
 </Validation>
 
 @code {
-    [Parameter]
-    public UserInsertModel CurrentUser { get; set; } = new UserInsertModel();
+    private UserInsertModel currentUser = new UserInsertModel();
+    [Parameter] public UserInsertModel CurrentUser
+    {
+        get => currentUser;
+        set
+        {
+            currentUser = value;
+            CurrentUserChanged.InvokeAsync(value).GetAwaiter().GetResult();
+        }
+    }
 
+    [Parameter] public EventCallback<UserInsertModel> CurrentUserChanged { get; set; }
 }

@@ -9,14 +9,13 @@
         <EditForm OnSubmit="SubmitAsync" Model="model" EditContext="context">
             <DataAnnotationsValidator />
             <Validations Mode="ValidationMode.Auto" Model="@model" ValidateOnLoad="true" @ref="validations">
-                <AwUserInsert CurrentUser="model.User"></AwUserInsert>
+                <AwUserInsert @bind-CurrentUser="model.User"></AwUserInsert>
 
                 <Validation>
                     <Field Horizontal="true">
-                        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Vote</FieldLabel>
                         <FieldBody ColumnSize="ColumnSize.Is10">
                             <Slider TValue="int" Min="0" Max="5" Step="1" @bind-Value="@model.Vote">
-                                <ValidationError />
                             </Slider>
                         </FieldBody>
                     </Field>
@@ -24,7 +23,7 @@
 
                 <Validation>
                     <Field Horizontal="true">
-                        <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Confirm Value?</FieldLabel>
                         <FieldBody ColumnSize="ColumnSize.Is10">
                             <Switch TValue="bool" @bind-Checked="@model.ConfirmValue">
                                 <ValidationError />
@@ -49,7 +48,7 @@
 @code {
     private Snackbar snackbar;
     private string SnackBarContent { get; set; }
-    public ReviewInsertModel model = new ReviewInsertModel() { User = new Models.Users.UserInsertModel() };
+    public ReviewInsertModel model = new ReviewInsertModel();
     private EditContext context;
     private bool isValid;
     Validations validations;

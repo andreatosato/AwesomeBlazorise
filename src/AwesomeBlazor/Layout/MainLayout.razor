@@ -41,6 +41,17 @@
                             </BarDropdown>
                             <BarDropdown>
                                 <BarDropdownToggle>
+                                    <BarIcon IconName="IconName.ShoppingBasket" />
+                                    Datagrid
+                                </BarDropdownToggle>
+                                <BarDropdownMenu>
+                                    <BarDropdownItem To="/datagrid/aggregation/view">
+                                        Aggregation
+                                    </BarDropdownItem>
+                                </BarDropdownMenu>
+                            </BarDropdown>
+                            <BarDropdown>
+                                <BarDropdownToggle>
                                     <BarIcon IconName="IconName.Reply" />
                                     Review
                                 </BarDropdownToggle>
@@ -178,6 +189,15 @@
                     </BreadcrumbItem>
                     <BreadcrumbItem>
                         <BreadcrumbLink To="/movies/grid/view">Grid</BreadcrumbLink>
+                    </BreadcrumbItem>
+                }
+                @if (navigation.Uri.Contains("datagrid", StringComparison.OrdinalIgnoreCase))
+                {
+                    <BreadcrumbItem>
+                        <BreadcrumbLink>Datagrid</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink To="/datagrid/aggregation/view">Aggregation</BreadcrumbLink>
                     </BreadcrumbItem>
                 }
                 @if (navigation.Uri.Contains("review", StringComparison.OrdinalIgnoreCase))

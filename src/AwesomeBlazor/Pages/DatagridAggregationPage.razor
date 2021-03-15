@@ -15,11 +15,11 @@
     <DataGridAggregates>
         <DataGridAggregate TItem="Product" Field="@(nameof(Product.AvailableInStock))" Aggregate="DataGridAggregateType.Sum">
         </DataGridAggregate>
-        <DataGridAggregate TItem="Product" Field="@(nameof(Product.Year))" Aggregate="DataGridAggregateType.Count" />
+        <DataGridAggregate TItem="Product" Field="@(nameof(Product.Year))" Aggregate="DataGridAggregateType.Average" />
     </DataGridAggregates>
     <DataGridColumns>
         <DataGridColumn TItem="Product" Field="@(nameof(Product.Name))" Caption="Product Name" Sortable="true"></DataGridColumn>
-        @*<DataGridColumn TItem="Product" Field="@(nameof(Product.AvailableInStock))" Caption="Available In Stock" Sortable="true"></DataGridColumn>
-        <DataGridNumericColumn TItem="Product" Field="@(nameof(Product.Year))" Caption="Year" Sortable="true"></DataGridNumericColumn>*@
+        <DataGridColumn TItem="Product" Field="@(nameof(Product.Year))" Caption="Year" Sortable="true"></DataGridColumn>
+        <DataGridColumn TItem="Product" Field="@(nameof(Product.AvailableInStock))" Caption="AvailableInStock" Sortable="true"></DataGridColumn>
     </DataGridColumns>
 </DataGrid>

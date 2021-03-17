@@ -1,9 +1,10 @@
 ﻿@page "/movies/popular/view"
 @inject NavigationManager navigationManager
+@inject IJSRuntime jSRuntime
 @inject Services.Abstractions.ITMDbService TMDb
 @using AwesomeBlazor.Components.Movies
 
-<Heading Size="HeadingSize.Is3">Movies</Heading>
+<Heading Size="HeadingSize.Is3" id="movieTitleId">Movies</Heading>
 
 <CardDeck>
     <Row>
@@ -27,8 +28,12 @@
 
     public async Task ChangePage(int page)
     {
-        if(PagedMovies?.Page != page)
+        if (PagedMovies?.Page != page)
+        {
             await LoadMoviesAsync(page);
+            await jSRuntime.InvokeVoidAsync("blazorHelpers.scrollToFragment", "movieTitleId");
+        }
+
     }
 
     public void MovieDetails(long movieId)
